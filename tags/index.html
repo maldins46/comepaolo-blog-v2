@@ -1,0 +1,78 @@
+---
+layout: page
+title: Tags
+permalink: /tags/
+---
+
+<div class="tags-page">
+
+  <div class="section-header animate-in delay-1">
+    <div class="section-label">All Tags</div>
+  </div>
+  <div class="tags-cloud animate-in delay-2">
+    {% assign sorted_tags = site.tags | sort %}
+    {% for tag in sorted_tags %}
+      {% assign tag_name = tag[0] %}
+      <a href="#tag-{{ tag_name | slugify }}" class="tag tag-cloud-link">
+        {{ tag_name }}<span class="tag-count">{{ tag[1].size }}</span>
+      </a>
+    {% endfor %}
+  </div>
+
+  {% for tag in sorted_tags %}
+    {% assign tag_name = tag[0] %}
+    {% assign tag_posts = tag[1] | sort: 'date' | reverse %}
+    <div class="tag-section" id="tag-{{ tag_name | slugify }}">
+      <div class="section-header">
+        <div class="section-label">{{ tag_name }}</div>
+      </div>
+      <div class="posts">
+        {% for post in tag_posts %}
+        <a class="post-item" href="{{ post.url | prepend: site.baseurl }}">
+          <div class="post-top-row">
+            <span class="post-title">{{ post.title }}</span>
+            <span class="post-date">{{ post.date | date: "%d %b %Y" }}</span>
+          </div>
+          <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+          {% if post.tags.size > 0 %}
+          <div class="post-tags">
+            {% for t in post.tags %}<span class="tag">{{ t }}</span>{% endfor %}
+          </div>
+          {% endif %}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+
+</div>
+
+<script>
+(function () {
+  function getHash() {
+    return window.location.hash.replace(/^#/, '');
+  }
+
+  function highlightSection(hash) {
+    document.querySelectorAll('.tag-section').forEach(function (el) {
+      el.classList.remove('tag-section--active');
+    });
+    if (!hash) return;
+    var target = document.getElementById(hash);
+    if (!target) return;
+    target.classList.add('tag-section--active');
+    setTimeout(function () {
+      var nav = document.querySelector('.nav');
+      var navHeight = nav ? nav.offsetHeight : 0;
+      var top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }, 50);
+  }
+
+  highlightSection(getHash());
+
+  window.addEventListener('hashchange', function () {
+    highlightSection(getHash());
+  });
+})();
+</script>

@@ -19,7 +19,7 @@ layout: default
       {% if page.tags.size > 0 %}
       <div class="article-tags-top">
         {% for tag in page.tags %}
-        <span class="tag">{{ tag }}</span>
+        <a class="tag" href="{{ site.baseurl }}/tags/#tag-{{ tag | slugify }}">{{ tag }}</a>
         {% endfor %}
       </div>
       {% endif %}
@@ -43,7 +43,7 @@ layout: default
   {% if page.tags.size > 0 %}
   <div class="article-tags-top">
     {% for tag in page.tags %}
-    <span class="tag">{{ tag }}</span>
+    <a class="tag" href="{{ site.baseurl }}/tags/#tag-{{ tag | slugify }}">{{ tag }}</a>
     {% endfor %}
   </div>
   {% endif %}

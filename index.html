@@ -16,7 +16,7 @@ title: Home
 {% if featured_post %}
 <div class="section-header animate-in delay-4"><div class="section-label">Featured</div></div>
 <div class="featured animate-in delay-5">
-  <a class="featured-item" href="{{ featured_post.url | prepend: site.baseurl }}">
+  <div class="featured-item" data-href="{{ featured_post.url | prepend: site.baseurl }}">
     <div class="post-top-row">
       <span class="post-title">{{ featured_post.title }}</span>
       <span class="post-date">{{ featured_post.date | date: "%d %b %Y" }}</span>
@@ -24,10 +24,10 @@ title: Home
     <p class="post-excerpt">{{ featured_post.excerpt | strip_html | truncatewords: 30 }}</p>
     {% if featured_post.tags.size > 0 %}
     <div class="post-tags">
-      {% for tag in featured_post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+      {% for tag in featured_post.tags %}<a class="tag" href="{{ site.baseurl }}/tags/#tag-{{ tag | slugify }}">{{ tag }}</a>{% endfor %}
     </div>
     {% endif %}
-  </a>
+  </div>
 </div>
 {% endif %}
 
@@ -35,7 +35,7 @@ title: Home
 <div class="posts">
   {% for post in paginator.posts %}
     {% if post.featured != true %}
-    <a class="post-item animate-in delay-{{ forloop.index | plus: 5 | at_most: 8 }}" href="{{ post.url | prepend: site.baseurl }}">
+    <div class="post-item animate-in delay-{{ forloop.index | plus: 5 | at_most: 8 }}" data-href="{{ post.url | prepend: site.baseurl }}">
       <div class="post-top-row">
         <span class="post-title">{{ post.title }}</span>
         <span class="post-date">{{ post.date | date: "%d %b %Y" }}</span>
@@ -43,10 +43,10 @@ title: Home
       <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
       {% if post.tags.size > 0 %}
       <div class="post-tags">
-        {% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+        {% for tag in post.tags %}<a class="tag" href="{{ site.baseurl }}/tags/#tag-{{ tag | slugify }}">{{ tag }}</a>{% endfor %}
       </div>
       {% endif %}
-    </a>
+    </div>
     {% endif %}
   {% endfor %}
 </div>

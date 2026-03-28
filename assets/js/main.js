@@ -65,3 +65,11 @@
     }
   });
 })();
+
+// Delegated navigation for [data-href] wrappers (post/featured items)
+document.addEventListener('click', function (e) {
+  var item = e.target.closest('[data-href]');
+  if (!item) return;
+  if (e.target.closest('a')) return;
+  window.location.href = item.getAttribute('data-href');
+});
