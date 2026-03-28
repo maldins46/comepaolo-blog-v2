@@ -9,6 +9,7 @@ permalink: /blog/:title/
 
 plugins:
   - jekyll-paginate
+  - jekyll-redirect-from
 
 paginate: 6
 paginate_path: "/page/:num/"
@@ -25,3 +26,4 @@ exclude:
   - Gemfile.lock
   - README.md
   - LICENSE
+  - original-website/
