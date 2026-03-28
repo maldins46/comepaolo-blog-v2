@@ -1,0 +1,35 @@
+@media (max-width: 640px) {
+  .nav-inner { padding: 0 16px; }
+  .nav-link { padding: 6px 8px; font-size: 12px; }
+  .hero { padding: 40px 16px 36px; }
+  .hero-inner { gap: 20px; }
+  .hero-avatar { width: 56px; height: 56px; }
+  .section-header { padding: 36px 16px 12px; }
+  .featured { padding: 0 16px; }
+  .posts { padding: 0 16px 36px; }
+  .post-top-row { flex-direction: column; gap: 4px; }
+  .post-date { order: -1; }
+  .about-intro { flex-direction: column; gap: 20px; }
+  .about-avatar { width: 72px; height: 72px; }
+  .article-header { padding: 36px 16px 0; }
+  .article-cover { padding: 20px 16px 0; }
+  .article-cover img { height: 180px; }
+  .article-content { padding: 32px 16px 64px; }
+  .about-inner { padding: 36px 16px 64px; }
+  .footer-inner { flex-direction: column; text-align: center; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.delay-1 { animation-delay: 0.05s; }
+.delay-2 { animation-delay: 0.1s; }
+.delay-3 { animation-delay: 0.15s; }
+.delay-4 { animation-delay: 0.2s; }
+.delay-5 { animation-delay: 0.25s; }
+.delay-6 { animation-delay: 0.3s; }
+.delay-7 { animation-delay: 0.35s; }
+.delay-8 { animation-delay: 0.4s; }

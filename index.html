@@ -1,0 +1,65 @@
+---
+layout: default
+title: Home
+---
+
+{% include hero.html %}
+
+{% assign featured_post = nil %}
+{% for post in site.posts %}
+  {% if post.featured %}
+    {% assign featured_post = post %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if featured_post %}
+<div class="section-header animate-in delay-4"><div class="section-label">Featured</div></div>
+<div class="featured animate-in delay-5">
+  <a class="featured-item" href="{{ featured_post.url | prepend: site.baseurl }}">
+    <div class="featured-meta">
+      <span class="featured-pin">Pinned</span>
+      <span class="post-date">{{ featured_post.date | date: "%d %b %Y" }}</span>
+    </div>
+    <div class="post-top-row"><span class="post-title">{{ featured_post.title }}</span></div>
+    <p class="post-excerpt">{{ featured_post.excerpt | strip_html | truncatewords: 30 }}</p>
+    {% if featured_post.tags.size > 0 %}
+    <div class="post-tags">
+      {% for tag in featured_post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+    </div>
+    {% endif %}
+  </a>
+</div>
+{% endif %}
+
+<div class="section-header animate-in delay-6"><div class="section-label">Latest Posts</div></div>
+<div class="posts">
+  {% for post in paginator.posts %}
+    {% if post.featured != true %}
+    <a class="post-item animate-in delay-{{ forloop.index | plus: 5 | at_most: 8 }}" href="{{ post.url | prepend: site.baseurl }}">
+      <div class="post-top-row">
+        <span class="post-title">{{ post.title }}</span>
+        <span class="post-date">{{ post.date | date: "%d %b %Y" }}</span>
+      </div>
+      <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+      {% if post.tags.size > 0 %}
+      <div class="post-tags">
+        {% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
+    </a>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{% if paginator.previous_page == 1 %}{{ site.baseurl }}/{% else %}{{ site.paginate_path | replace: ':num', paginator.previous_page | prepend: site.baseurl }}{% endif %}">&larr; Newer</a>
+  {% endif %}
+  <span class="current">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}
+    <a href="{{ site.paginate_path | replace: ':num', paginator.next_page | prepend: site.baseurl }}">Older &rarr;</a>
+  {% endif %}
+</div>
+{% endif %}

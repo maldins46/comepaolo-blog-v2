@@ -1,0 +1,27 @@
+title: "Comepaolo"
+description: "Code, thoughts, and tales from Jesi e dintorni."
+author: "Riccardo Maldini"
+email: riccardo.maldini@gmail.com
+url: ""
+baseurl: ""
+
+permalink: /blog/:title/
+
+plugins:
+  - jekyll-paginate
+
+paginate: 6
+paginate_path: "/page/:num/"
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+
+exclude:
+  - prototype.html
+  - Gemfile.lock
+  - README.md
+  - LICENSE
