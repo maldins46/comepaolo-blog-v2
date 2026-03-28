@@ -70,10 +70,28 @@
   transition: all 0.2s;
   margin-left: 8px;
   flex-shrink: 0;
+  position: relative;
 
   &:hover {
     border-color: var(--border-strong);
     transform: rotate(15deg);
+  }
+
+  &:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--bg);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: tooltipFade 0.2s ease-in-out;
   }
 
   svg {
@@ -83,7 +101,75 @@
   }
 }
 
-[data-theme="dark"] .icon-sun { display: block; }
-[data-theme="dark"] .icon-moon { display: none; }
-[data-theme="light"] .icon-sun { display: none; }
-[data-theme="light"] .icon-moon { display: block; }
+@keyframes tooltipFade {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.theme-feedback {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--text-primary);
+  color: var(--bg);
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  pointer-events: none;
+  animation: feedbackSlide 0.3s ease-out forwards;
+  z-index: 1000;
+
+  @media (max-width: 640px) {
+    bottom: 16px;
+    right: 16px;
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+}
+
+@keyframes feedbackSlide {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.theme-feedback.hide {
+  animation: feedbackSlideOut 0.3s ease-out forwards;
+}
+
+@keyframes feedbackSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.theme-toggle svg {
+  display: none;
+}
+
+// Default: show current mode icon
+.theme-toggle[data-mode="light"] .icon-sun { display: block; }
+.theme-toggle[data-mode="dark"] .icon-moon { display: block; }
+
+// Hover: show next mode icon
+.theme-toggle:hover .icon-sun { display: none; }
+.theme-toggle:hover .icon-moon { display: none; }
+.theme-toggle[data-mode="light"]:hover .icon-moon { display: block; }
+.theme-toggle[data-mode="dark"]:hover .icon-sun { display: block; }
