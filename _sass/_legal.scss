@@ -7,7 +7,6 @@
 .legal-header {
   margin-bottom: 40px;
   padding-bottom: 24px;
-  border-bottom: 1px solid var(--border);
 
   h1 {
     font-size: clamp(22px, 3vw, 30px);
@@ -49,7 +48,8 @@
     border: none;
     height: 1px;
     background: var(--border);
-    margin: 32px 0;
+    margin: 40px auto;
+    width: 100px;
   }
 
   ul, ol {

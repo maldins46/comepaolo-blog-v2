@@ -13,7 +13,10 @@ Is the blog powered by a CMS? Is it just a static website, an Angular PWA? Could
 
 If you've ever thought about that, you're in the right place. Let's start from the beginning.
 
-![Please appreciate my meme talent, thank you]({{ site.baseurl }}/assets/article_images/2025-08-28-my-website/cover-image.png "Meme post")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/cover-image.png" alt="Meme post">
+  <figcaption>Please appreciate my meme talent, thank you</figcaption>
+</figure>
 
 ---
 
@@ -39,7 +42,10 @@ My first idea was to **turn it into an online CV**. I wanted a place to showcase
 
 The first template I used was [Photon](https://html5up.net/photon), a versatile personal template. Then I tried [Miniport](https://html5up.net/miniport), which was a bit more CV-oriented, and finally settled on [Strata](https://html5up.net/strata).
 
-![The first version of the website, created with Strata.]({{ site.baseurl }}/assets/article_images/2025-08-28-my-website/strataWebsite.png "The Strata Website")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/strataWebsite.png" alt="The Strata Website">
+  <figcaption>The first version of the website, created with Strata.</figcaption>
+</figure>
 
 It worked for its purpose… but it was also very limited. It was just a static page, and every change required a lot of manual editing in HTML and CSS.
 
@@ -59,7 +65,10 @@ That's how I found **[Grav](https://getgrav.org)**, a simple file-based CMS that
 
 I switched to Grav with a CV-themed skeleton called [Hola](https://github.com/devlom/grav-skeleton-hola), which I heavily customized for my needs. This version of the website lasted for years. It was flexible, easy to use, and very low-maintenance. Adding a new project, education, or work experience was as simple as editing a post and uploading a few photos — Grav handled the rest.
 
-![A snapshot of my website with the Grav Hola Template.]({{ site.baseurl }}/assets/article_images/2025-08-28-my-website/holaWebsite2.png "The Hola Website")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/holaWebsite2.png" alt="The Hola Website">
+  <figcaption>A snapshot of my website with the Grav Hola Template.</figcaption>
+</figure>
 
 ### Shifting to the blog approach
 
@@ -73,7 +82,10 @@ The first version of the blog used, once again, a Grav theme: [Mediator](https:/
 
 I created the initial content, set up the skeleton of the site, and added a few customizations. I even [contributed to the open source project of the theme](https://github.com/getgrav/grav-theme-mediator/pull/25) with some optimizations.
 
-![The actual bloggish-style of the website, based on the Mediator theme]({{ site.baseurl }}/assets/article_images/2025-08-28-my-website/mediatorWebsite.png "The Mediator-themed Website")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/mediatorWebsite.png" alt="The Mediator-themed Website">
+  <figcaption>The actual bloggish-style of the website, based on the Mediator theme</figcaption>
+</figure>
 
 ### The second paradigm shift: Jekyll
 
@@ -91,7 +103,10 @@ While digging around, I discovered that the Mediator theme for Grav was actually
 
 The current version of my website lives inside the **[comepaolo-blog project](https://github.com/maldins46/comepaolo-blog)**, which started as a fork of the [Mediator Jekyll theme](https://github.com/dirkfabisch/mediator) originally created by [dirkfabisch](https://github.com/dirkfabisch/). Mediator was designed as a clean, Medium-inspired theme, and it gave me a solid and elegant foundation to build upon.
 
-![The actual comepaolo-blog project on GitHub.]({{ site.baseurl }}/assets/article_images/2025-08-28-my-website/comepaoloblogGithub.png "The Comepaolo Blog Project")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/comepaoloblogGithub.png" alt="The Comepaolo Blog Project">
+  <figcaption>The actual comepaolo-blog project on GitHub.</figcaption>
+</figure>
 
 I didn't just fork it and leave it untouched, though. Over time, I shaped it to better reflect my needs and style. Some changes were simple customizations to the **blog layout and sections**, while others were more structural. For example, I extended the **post tag system** so that tags are now more prominent: each post shows its tags, and clicking on them brings you to a dedicated page listing all related articles.
 

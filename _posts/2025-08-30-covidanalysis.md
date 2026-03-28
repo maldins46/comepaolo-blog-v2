@@ -16,7 +16,10 @@ In the middle of this, I was in my final year of university. The pandemic hit It
 
 But after the first shock, something unique happened in Italy—something that, as far as I know, very few countries attempted. COVID-related data—numbers of infections, hospitalizations, deaths, and later vaccinations—were made **publicly available as open data**. Updated daily, they were shared on a [dedicated GitHub repository](https://github.com/pcm-dpc/COVID-19). To me, this was remarkable: a real act of transparency and, in a way, efficiency from our *Protezione Civile*. It's not common for governments to publish this kind of information in such a structured and accessible way.
 
-![The COVID-19 Repository from the Protezione Civile]({{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/pcm-home.png "The COVID-19 Repository from the Protezione Civile")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/pcm-home.png" alt="The COVID-19 Repository from the Protezione Civile">
+  <figcaption>The COVID-19 Repository from the Protezione Civile</figcaption>
+</figure>
 
 It was in the autumn of 2020 that I stumbled upon this repository. By then, the air was thick with news—some accurate, some misleading, some pure speculation. That's when a thought struck me: *what if I try to make sense of the data myself, instead of drowning in unverified headlines and rumors?*
 
@@ -26,17 +29,26 @@ It was in the autumn of 2020 that I stumbled upon this repository. By then, the 
 
 In November 2020, I started the **[CovidAnalysis Project](https://github.com/maldins46/CovidAnalysis)**, a not-so-original name for a small GitHub repository where I experimented with visualizing the data published by the *Protezione Civile*.
 
-![The CovidAnalysis Project on GitHub]({{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/repo-home.png "The CovidAnalysis Project on GitHub")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/repo-home.png" alt="The CovidAnalysis Project on GitHub">
+  <figcaption>The CovidAnalysis Project on GitHub</figcaption>
+</figure>
 
 The repository looked very different in its early days compared to what you can see now. At first, I simply created **basic plots using Matplotlib's PyPlot library**. Nothing fancy—just simple charts to get a clearer view of the numbers.
 
 I began with the basics: the number of deaths and infections, both as weekly incidence and absolute values. I was particularly interested in the data from my own region, *Le Marche*, since local information wasn't always easy to find in national news.
 
-![Example of the first basic charts.]({{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/chart-marche-parameters.png "Example of the first basic charts")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/chart-marche-parameters.png" alt="Example of the first basic charts">
+  <figcaption>Example of the first basic charts.</figcaption>
+</figure>
 
 As I got more comfortable, I started experimenting with more advanced analysis. I built geographical maps showing data per region and province, calculated derivatives to track daily increases or decreases, and even tried to estimate the infamous [RT and R0 indexes](https://tg24.sky.it/salute-e-benessere/approfondimenti/indice-rt) per region—later adding vaccination data as well.
 
-![Example of geomap chart.]({{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/chart-increment-provinces.png "Example of geomap chart")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/chart-increment-provinces.png" alt="Example of geomap chart">
+  <figcaption>Example of geomap chart.</figcaption>
+</figure>
 
 What made this project truly fascinating was its **immediacy**. The data wasn't historical or archived: it was unfolding in real time. Every day I could update my charts and see the impact of new cases, comparing how infections rose or fell against the thresholds the government used to determine lockdown measures.
 
@@ -52,7 +64,10 @@ The first step was **automation**. I set up a GitHub Action with a cron job. Eve
 
 The second step was **exposing the data**. I decided to build a small Angular Progressive Web App (PWA) to display all the charts my scripts generated daily.
 
-![How CovidAnalysis appears from PC]({{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/covidanalysis-homepage.png "PC screenshot")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/covidanalysis-homepage.png" alt="PC screenshot">
+  <figcaption>How CovidAnalysis appears from PC</figcaption>
+</figure>
 
 In less than a week, I had [the first version up and running](https://maldins46.github.io/CovidAnalysis). To keep things simple (and free), I hosted it directly on GitHub Pages. Zero cost, minimal friction, and suddenly my data wasn't just mine anymore—it was available to anyone.
 
@@ -62,7 +77,10 @@ In less than a week, I had [the first version up and running](https://maldins46.
 
 Over time, the website became more than just a data portal—it turned into a playground for experimenting with style and features. I started treating it as a design exercise, trying out **Angular's Material UI** and fine-tuning the details of the interface.
 
-![How CovidAnalysis appears from mobile]({{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/phone-screens.png "Phone screenshots")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/phone-screens.png" alt="Phone screenshots">
+  <figcaption>How CovidAnalysis appears from mobile</figcaption>
+</figure>
 
 I also restructured the site into **multiple sections**: one dedicated to national Italian data, another focused on my home region of *Le Marche*, and a third where I pulled in pandemic-related news directly from Twitter.
 
@@ -70,7 +88,10 @@ On the design side, I couldn't resist adding a **dark mode**, along with an auto
 
 But the feature I'm most proud of was the **notification system**. I experimented with push notifications: whenever new daily data was processed, users would receive a notification. To achieve this, I combined service workers with a minimal backend deployed on Heroku.
 
-![CovidAnalysis high level architecture]({{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/covidanalysis-architecture.png "CovidAnalysis high level architecture")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/covidanalysis-architecture.png" alt="CovidAnalysis high level architecture">
+  <figcaption>CovidAnalysis high level architecture</figcaption>
+</figure>
 
 ---
 

@@ -14,7 +14,10 @@ I first discovered LaTeX at university, and I kept using it well beyond that con
 
 But writing it — whether in Overleaf or locally — soon revealed a bigger problem: **versioning**. Maintaining my CV wasn't as simple as I'd hoped. Every update meant opening my editor, re-compiling the `.tex` file, exporting the PDF, and making sure I didn't overwrite the wrong version. Over time, I ended up with a folder full of files named things like `CV-final-v2.pdf`, `CV-updated.pdf`, and of course, the infamous `CV-really-final.pdf`.
 
-![The versioning hell without a versioning system. This could escalate very quickly, trust me.]({{ site.baseurl }}/assets/article_images/2025-08-23-maldini-cv/versioning-hell.png "The versioning hell")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-23-maldini-cv/versioning-hell.png" alt="The versioning hell">
+  <figcaption>The versioning hell without a versioning system. This could escalate very quickly, trust me.</figcaption>
+</figure>
 
 The struggle was real. At one point, I even gave up and switched to a simple Word document — probably the least "programmer" thing a programmer could do.
 
@@ -26,7 +29,10 @@ I spend my days working with version control, automation, and CI/CD pipelines. S
 
 That's how [MaldiniCV](https://github.com/maldins46/MaldiniCV) was born.
 
-![MaldiniCV project on GitHub.]({{ site.baseurl }}/assets/article_images/2025-08-23-maldini-cv/maldinicv-pc.png "Github Project")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-23-maldini-cv/maldinicv-pc.png" alt="Github Project">
+  <figcaption>MaldiniCV project on GitHub.</figcaption>
+</figure>
 
 Instead of treating my resume like a static document, I decided to treat it like a piece of software. The content lives in a GitHub repository, written in LaTeX, and every time I want to "release" a new version of my CV, I simply push a Git tag. Behind the scenes, a GitHub Actions workflow compiles the source, generates a polished PDF, and publishes it as a release artifact. No manual steps, no confusion about which file is the latest — just clean automation.
 
@@ -49,7 +55,10 @@ git push origin v1.2.0
 
 That tag is the trigger. GitHub Actions wakes up, installs a LaTeX environment, compiles my CV into a PDF, and creates a brand-new release in the repository. Within a minute or two, the final document is available to download straight from the Releases page.
 
-![Releases screen of the project, with the version v1.0.0]({{ site.baseurl }}/assets/article_images/2025-08-23-maldini-cv/maldini-cv-releases.png "Releases page")
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-23-maldini-cv/maldini-cv-releases.png" alt="Releases page">
+  <figcaption>Releases screen of the project, with the version v1.0.0</figcaption>
+</figure>
 
 What I love about this is how natural it feels. Versioning my CV is just like versioning code: the history is visible, the process is repeatable, and the output is always reliable.
 

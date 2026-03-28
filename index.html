@@ -17,11 +17,10 @@ title: Home
 <div class="section-header animate-in delay-4"><div class="section-label">Featured</div></div>
 <div class="featured animate-in delay-5">
   <a class="featured-item" href="{{ featured_post.url | prepend: site.baseurl }}">
-    <div class="featured-meta">
-      <span class="featured-pin">Pinned</span>
+    <div class="post-top-row">
+      <span class="post-title">{{ featured_post.title }}</span>
       <span class="post-date">{{ featured_post.date | date: "%d %b %Y" }}</span>
     </div>
-    <div class="post-top-row"><span class="post-title">{{ featured_post.title }}</span></div>
     <p class="post-excerpt">{{ featured_post.excerpt | strip_html | truncatewords: 30 }}</p>
     {% if featured_post.tags.size > 0 %}
     <div class="post-tags">

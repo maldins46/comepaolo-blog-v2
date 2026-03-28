@@ -18,8 +18,8 @@ Your privacy is important to us. This Privacy Policy explains how we handle your
 The Data Controller responsible for processing personal data is:  
 
 **Riccardo Maldini**  
-📧 Email: [riccardo.maldini@gmail.com](mailto:riccardo.maldini@gmail.com)  
-🌍 Website: [https://riccardomaldini.it](https://riccardomaldini.it)  
+- Email: [riccardo.maldini@gmail.com](mailto:riccardo.maldini@gmail.com)  
+- Website: [https://riccardomaldini.it](https://riccardomaldini.it)  
 
 ---
 
@@ -83,5 +83,5 @@ Since this website does not actively collect personal data, these rights are gen
 ## 9. Contact
 If you have questions about this Privacy Policy or how your data is handled, please contact:  
 
-📧 Email: [riccardo.maldini@gmail.com](mailto:riccardo.maldini@gmail.com)  
-🌍 Website: [https://riccardomaldini.it](https://riccardomaldini.it)  
+- Email: [riccardo.maldini@gmail.com](mailto:riccardo.maldini@gmail.com)  
+- Website: [https://riccardomaldini.it](https://riccardomaldini.it)  

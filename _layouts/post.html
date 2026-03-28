@@ -2,6 +2,31 @@
 layout: default
 ---
 
+{% if page.image %}
+<div class="article-hero">
+  <div class="article-hero-bg" style="background-image: url('{{ page.image }}')"></div>
+  <div class="article-hero-overlay"></div>
+  <div class="article-hero-content">
+    <div class="article-hero-text">
+      <h1>{{ page.title }}</h1>
+      <div class="article-meta-bar">
+        <span>{{ site.author }}</span>
+        <span class="dot"></span>
+        <span>{{ page.date | date: "%d %b %Y" }}</span>
+        <span class="dot"></span>
+        <span>{% assign words = content | number_of_words %}{% if words < 200 %}1{% else %}{{ words | divided_by: 200 }}{% endif %} min read</span>
+      </div>
+      {% if page.tags.size > 0 %}
+      <div class="article-tags-top">
+        {% for tag in page.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% else %}
 <div class="article-header">
   <a class="article-back" href="{{ site.baseurl }}/">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -15,22 +40,16 @@ layout: default
     <span class="dot"></span>
     <span>{% assign words = content | number_of_words %}{% if words < 200 %}1{% else %}{{ words | divided_by: 200 }}{% endif %} min read</span>
   </div>
-</div>
-
-{% if page.image %}
-<div class="article-cover">
-  <img src="{{ page.image }}" alt="{{ page.title }}">
-</div>
-{% endif %}
-
-<div class="article-content">
-  {{ content }}
-
   {% if page.tags.size > 0 %}
-  <div class="article-tags-bottom">
+  <div class="article-tags-top">
     {% for tag in page.tags %}
     <span class="tag">{{ tag }}</span>
     {% endfor %}
   </div>
   {% endif %}
+</div>
+{% endif %}
+
+<div class="article-content">
+  {{ content }}
 </div>
