@@ -33,7 +33,6 @@
   display: block;
   padding: 24px 0 24px 16px;
   border-bottom: 1px solid var(--border);
-  border-top: 1px solid var(--border);
   transition: all 0.2s;
   color: var(--text-primary);
   position: relative;
@@ -52,6 +51,7 @@
 
   &:hover { color: var(--text-primary); }
   &:hover .post-title { color: var(--accent); }
+  &:last-child { border-bottom: none; }
 }
 
 .featured-meta {
@@ -84,8 +84,8 @@
   color: var(--text-primary);
   cursor: pointer;
 
-  &:first-child { border-top: 1px solid var(--border); }
   &:hover .post-title { color: var(--accent); }
+  &:last-child { border-bottom: none; }
 }
 
 .post-top-row {

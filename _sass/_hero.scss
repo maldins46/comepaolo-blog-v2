@@ -10,11 +10,11 @@
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80');
+  background-image: url('/assets/images/background-image.jpg');
   background-size: cover;
   background-position: center;
-  filter: blur(16px);
-  transform: scale(1.1);
+  filter: blur(4px);
+  transform: scale(1.2);
 
   &::after {
     content: '';
@@ -133,5 +133,20 @@
   svg {
     width: 14px;
     height: 14px;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 0;
+    gap: 0;
+    padding: 0;
+    border: none;
+
+    &:hover {
+      border-color: transparent;
+    }
+
+    svg {
+      margin-right: 0;
+    }
   }
 }
