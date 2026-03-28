@@ -2,7 +2,7 @@ title: "Comepaolo"
 description: "Code, thoughts, and tales from Jesi e dintorni."
 author: "Riccardo Maldini"
 email: riccardo.maldini@gmail.com
-url: ""
+url: "https://riccardomaldini.it"
 baseurl: ""
 
 permalink: /blog/:title/
