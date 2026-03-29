@@ -53,6 +53,10 @@
     applyTheme(next);
     updateButton();
     showFeedback(next);
+    // Suppress hover icon swap briefly so sticky-hover on touch doesn't
+    // show the wrong icon after the theme changes
+    btn.classList.add('no-hover');
+    setTimeout(function () { btn.classList.remove('no-hover'); }, 500);
   });
 
   // Listen for system theme changes

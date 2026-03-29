@@ -46,7 +46,7 @@ I began with the basics: the number of deaths and infections, both as weekly inc
 As I got more comfortable, I started experimenting with more advanced analysis. I built geographical maps showing data per region and province, calculated derivatives to track daily increases or decreases, and even tried to estimate the infamous [RT and R0 indexes](https://tg24.sky.it/salute-e-benessere/approfondimenti/indice-rt) per region—later adding vaccination data as well.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/chart-increment-provinces.png" alt="Example of geomap chart">
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/chart-increment-provinces.jpg" alt="Example of geomap chart">
   <figcaption>Example of geomap chart.</figcaption>
 </figure>
 
@@ -65,7 +65,7 @@ The first step was **automation**. I set up a GitHub Action with a cron job. Eve
 The second step was **exposing the data**. I decided to build a small Angular Progressive Web App (PWA) to display all the charts my scripts generated daily.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/covidanalysis-homepage.png" alt="PC screenshot">
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-30-covidanalysis/covidanalysis-home.png" alt="PC screenshot">
   <figcaption>How CovidAnalysis appears from PC</figcaption>
 </figure>
 

@@ -88,7 +88,7 @@ No exaggeration: Canestreet has become a true part of Jesi's summer identity—a
 
 Along the way, **Canestreet** became more than a tournament. It became my personal playground for experimentation.
 
-### The CaneScoreboard 🏀
+### The CaneScoreboard
 
 In the early years, we didn't have access to electronic scoreboards. So I built one.
 **The CaneScoreboard** ([github](https://github.com/maldins46/ThecaneScoreboard), [live demo](https://thecanescoreboard.web.app/login)) is a simple web app connected to a Firebase backend that lets us display live scores, fouls, and time. One screen is in editor mode (for updates), the other in display mode (for the audience). Low-latency. Real-time. It may not be beautiful, but it works—and it feels amazing to see people rely on something you made with your own hands.
@@ -98,17 +98,17 @@ In the early years, we didn't have access to electronic scoreboards. So I built 
   <figcaption>TheCaneScoraboard display mode in place, 2019</figcaption>
 </figure>
 
-### The Website — thecanestreet.it 🌐
+### The Website — thecanestreet.it
 
 I also created and maintained [the website](https://thecanestreet.it/), which serves as our digital headquarters.
 Built with WordPress, it includes sign-up forms, live brackets and results, sponsor visibility, and tournament rules. It may not be a full-blown platform, but it's a living, evolving part of the project—and a place where I got to mix my coding, UX, and design skills.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2025-06-22-canestreet/websiteHomepage.png" alt="Website Homepage">
+  <img src="{{ site.baseurl }}/assets/article_images/2025-06-22-canestreet/websiteHomepage2026.png" alt="Website Homepage">
   <figcaption>thecanestreet.it homepage</figcaption>
 </figure>
 
-### The Instagram — @canestreet3x3 📸
+### The Instagram — @canestreet3x3
 
 Our [Instagram page](https://www.instagram.com/canestreet3x3) is where the vibes live.
 I collaborate with friends who shoot photos, and I design infographics and announcements using tools like Canva and GIMP. Social media may not win tournaments, but it definitely brings people to them.

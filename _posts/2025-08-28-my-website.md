@@ -43,7 +43,7 @@ My first idea was to **turn it into an online CV**. I wanted a place to showcase
 The first template I used was [Photon](https://html5up.net/photon), a versatile personal template. Then I tried [Miniport](https://html5up.net/miniport), which was a bit more CV-oriented, and finally settled on [Strata](https://html5up.net/strata).
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/strataWebsite.png" alt="The Strata Website">
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/strata-theme.png" alt="The Strata Website">
   <figcaption>The first version of the website, created with Strata.</figcaption>
 </figure>
 
@@ -66,8 +66,8 @@ That's how I found **[Grav](https://getgrav.org)**, a simple file-based CMS that
 I switched to Grav with a CV-themed skeleton called [Hola](https://github.com/devlom/grav-skeleton-hola), which I heavily customized for my needs. This version of the website lasted for years. It was flexible, easy to use, and very low-maintenance. Adding a new project, education, or work experience was as simple as editing a post and uploading a few photos — Grav handled the rest.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/holaWebsite2.png" alt="The Hola Website">
-  <figcaption>A snapshot of my website with the Grav Hola Template.</figcaption>
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/hola-theme.jpg" alt="The Hola Website">
+  <figcaption>A snapshot from the original Grav Hola Template. For a long time, my website was a copycat of this one.</figcaption>
 </figure>
 
 ### Shifting to the blog approach
@@ -83,7 +83,7 @@ The first version of the blog used, once again, a Grav theme: [Mediator](https:/
 I created the initial content, set up the skeleton of the site, and added a few customizations. I even [contributed to the open source project of the theme](https://github.com/getgrav/grav-theme-mediator/pull/25) with some optimizations.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/mediatorWebsite.png" alt="The Mediator-themed Website">
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/mediator-blog.png" alt="The Mediator-themed Website">
   <figcaption>The actual bloggish-style of the website, based on the Mediator theme</figcaption>
 </figure>
 
@@ -104,7 +104,7 @@ While digging around, I discovered that the Mediator theme for Grav was actually
 The current version of my website lives inside the **[comepaolo-blog project](https://github.com/maldins46/comepaolo-blog)**, which started as a fork of the [Mediator Jekyll theme](https://github.com/dirkfabisch/mediator) originally created by [dirkfabisch](https://github.com/dirkfabisch/). Mediator was designed as a clean, Medium-inspired theme, and it gave me a solid and elegant foundation to build upon.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/comepaoloblogGithub.png" alt="The Comepaolo Blog Project">
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-28-my-website/comepaolo-blog-github.png" alt="The Comepaolo Blog Project">
   <figcaption>The actual comepaolo-blog project on GitHub.</figcaption>
 </figure>
 
@@ -127,3 +127,8 @@ The main advantage of this setup is that it behaves like a proper software proje
 In the end, Comepaolo Blog is still just my personal space online—but one that reflects not only who I am, but also how I work.
 
 And for me, **that combination feels just right**.
+
+
+----
+
+*Article update (March 2026): I've rewritten the blog template (again!) with my friend Claude Code, updating the theme to its v2! An article is incoming, see the new code under the [Comepaolo v2](https://github.com/maldins46/comepaolo-blog-v2) repo!*

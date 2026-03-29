@@ -30,7 +30,7 @@ I spend my days working with version control, automation, and CI/CD pipelines. S
 That's how [MaldiniCV](https://github.com/maldins46/MaldiniCV) was born.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2025-08-23-maldini-cv/maldinicv-pc.png" alt="Github Project">
+  <img src="{{ site.baseurl }}/assets/article_images/2025-08-23-maldini-cv/maldini-cv-github.png" alt="Github Project">
   <figcaption>MaldiniCV project on GitHub.</figcaption>
 </figure>
 
