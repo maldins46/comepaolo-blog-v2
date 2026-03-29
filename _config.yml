@@ -27,3 +27,4 @@ exclude:
   - README.md
   - LICENSE
   - original-website/
+  - CLAUDE.md
