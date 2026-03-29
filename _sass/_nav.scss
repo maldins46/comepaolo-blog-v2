@@ -170,8 +170,10 @@
 .theme-toggle[data-mode="light"] .icon-sun { display: block; }
 .theme-toggle[data-mode="dark"] .icon-moon { display: block; }
 
-// Hover: show next mode icon
-.theme-toggle:hover .icon-sun { display: none; }
-.theme-toggle:hover .icon-moon { display: none; }
-.theme-toggle[data-mode="light"]:hover .icon-moon { display: block; }
-.theme-toggle[data-mode="dark"]:hover .icon-sun { display: block; }
+// Hover: show next mode icon (pointer devices only — touch devices keep current icon)
+@media (hover: hover) {
+  .theme-toggle:hover .icon-sun { display: none; }
+  .theme-toggle:hover .icon-moon { display: none; }
+  .theme-toggle[data-mode="light"]:hover .icon-moon { display: block; }
+  .theme-toggle[data-mode="dark"]:hover .icon-sun { display: block; }
+}
