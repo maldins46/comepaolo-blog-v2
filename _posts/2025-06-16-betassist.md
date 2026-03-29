@@ -1,8 +1,8 @@
 ---
 title: "Live Scores, Real Pride: The Story Behind BetAssist"
 date: 2025-06-16
-excerpt: "\"What's the project you're most proud of?\" Every software developer has faced this question at least once. Maybe during an interview, maybe in a conversation with a colleague, a friend—or even with themselves."
-tags: [projects, java, android]
+excerpt: "\"What's the project you're most proud of?\" Every software developer has faced this question at least once. And that's what I responded. Meet BetAssist, my first end-to-end software product."
+tags: [projects, java, android, sport]
 image: /assets/article_images/2025-06-16-betassist/cover-image.png
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: "Hoops in the Heart of Jesi: The Rise of Canestreet 3x3"
 date: 2025-06-22
-excerpt: "Summer, 2018 — Jesi. It was one of those summers when time feels endless. I had just wrapped up my internship and was halfway through writing my bachelor's thesis."
-tags: [sport, basketball]
+excerpt: "Summer, 2018 — Jesi. It was one of those summers when time feels endless. And Michele had a crazy idea."
+tags: [basketball, sport]
 image: /assets/article_images/2025-06-22-canestreet/cover-image.jpg
 featured: true
 ---

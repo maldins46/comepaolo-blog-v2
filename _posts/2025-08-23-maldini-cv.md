@@ -1,8 +1,8 @@
 ---
 title: "MaldiniCV: How I automated my Curriculum Vitae with GitHub Actions"
 date: 2025-08-23
-excerpt: "Every student coming from a science-related university has, at some point, experimented with writing documents in LaTeX. It's a neat system designed for preparing documents, mostly used for academic purposes."
-tags: [projects, cv, automation, latex]
+excerpt: "The history of how I automated the lifecycle of my Curriculum Vitae, making my life a lot easier. And using the loved (hated) LaTeX language."
+tags: [projects, automation, latex, cv]
 image: /assets/article_images/2025-08-23-maldini-cv/cover-image.png
 ---
 

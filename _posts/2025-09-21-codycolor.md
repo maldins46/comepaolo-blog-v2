@@ -1,8 +1,8 @@
 ---
 title: "CodyColor Multiplayer: From a Thesis Project to a Startup Game"
 date: 2025-09-21
-excerpt: "2019 was a year of big changes in my life. I had just graduated with my bachelor's degree that February. My course was Informatica Applicata: that's roughly equivalent to Computer Science outside Italy."
-tags: [projects, angular, node, learning]
+excerpt: "The history of how I developed CodyColor, a web online game for learning purposes."
+tags: [projects, angular, node]
 image: /assets/article_images/2025-09-21-codycolor/cover-image.jpg
 ---
 

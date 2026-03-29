@@ -1,8 +1,8 @@
 ---
 title: "Visualizing the Pandemic: The Story Behind CovidAnalysis"
 date: 2025-08-30
-excerpt: "The Covid pandemic was one of the strangest periods of our lives. For a few years, the world seemed to stop in its tracks. Streets went silent, cities emptied, and our daily routines were suddenly reshaped."
-tags: [projects, angular, python, covid]
+excerpt: "In November 2020, I started the CovidAnalysis Project, a not-so-original name for a small GitHub repository where I experimented with visualizing the data published by the Protezione Civile."
+tags: [projects, angular, python]
 image: /assets/article_images/2025-08-30-covidanalysis/cover-image.png
 ---
 
