@@ -11,7 +11,6 @@ Comepaolo is a personal blog built with **Jekyll** (static site generator) and h
 - Bundler for Ruby dependency management
 - SASS for styling (modular structure)
 - Vanilla JavaScript (theme toggle, PWA, delegated navigation)
-- Service Worker for offline support
 - GitHub Pages for hosting (via `github-pages` gem)
 
 ## Development Commands
@@ -32,7 +31,7 @@ After running `bundle exec jekyll serve`, visit `http://localhost:4000` to previ
 ## Architecture & Structure
 
 ### Layout hierarchy
-- **`_layouts/default.html`** — base template; includes nav, footer, PWA manifest, theme script, service worker registration
+- **`_layouts/default.html`** — base template; includes nav, footer, PWA manifest, theme script
 - **`_layouts/post.html`** — post-specific layout; wraps default; renders featured image (if present) or text header with metadata (author, date, read time, tags)
 - **`_layouts/page.html`** — simple page wrapper
 - **`_layouts/legal.html`** — legal pages (privacy policies, terms)
@@ -58,9 +57,6 @@ Theme switching is CSS-based: `data-theme="light"` or `data-theme="dark"` attrib
 - **Theme toggle**: reads/writes `localStorage.theme`, respects system preference as fallback
 - **Delegated navigation**: `[data-href]` elements navigate on click (used for post/featured item cards)
 - **System theme listener**: updates theme if localStorage is unset and system preference changes
-
-### Service Worker (sw.js)
-Registers offline support; see file for cache strategy details.
 
 ## Content & Posts
 
@@ -176,12 +172,11 @@ chore(deps): update jekyll to 4.2
 - Run `bundle install` after modifying `Gemfile`
 - `Gemfile.lock` is committed; use it for consistent builds
 
-## PWA & Offline Support
+## PWA
 
-- `manifest.json` — installability metadata
-- `sw.js` — service worker (registers on page load via `default.html` script)
-- `offline.html` — fallback page when offline (if implemented in sw.js)
+- `manifest.json` — installability metadata (site is installable without a service worker)
 - Apple PWA: uses `apple-touch-icon.png`, `apple-mobile-web-app-*` meta tags
+- **No service worker**: previously removed because the cache-first strategy caused stale CSS/JS in installed PWAs. Do not reintroduce without a robust cache-busting strategy (e.g., content-hashed filenames).
 
 ## Performance & SEO
 

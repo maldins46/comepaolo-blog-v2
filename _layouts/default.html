@@ -65,8 +65,17 @@
 
 <script src="{{ site.baseurl }}/assets/js/main.js"></script>
 <script>
+  // Unregister any previously installed service worker and clear its caches.
+  // Keep this shim until all existing installs have refreshed at least once.
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
+    navigator.serviceWorker.getRegistrations().then(function (regs) {
+      regs.forEach(function (r) { r.unregister(); });
+    });
+    if (window.caches) {
+      caches.keys().then(function (keys) {
+        keys.forEach(function (k) { caches.delete(k); });
+      });
+    }
   }
 </script>
 </body>
