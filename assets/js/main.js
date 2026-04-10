@@ -2,56 +2,70 @@
   var html = document.documentElement;
   var btn = document.getElementById('themeBtn');
 
-  function getCurrentTheme() {
-    var stored = localStorage.getItem('theme');
-    if (stored === 'light' || stored === 'dark') {
-      return stored;
+  // Returns the stored user preference: 'light' | 'dark' | 'system'
+  // Migrates any legacy 'theme' key on first run.
+  function getPref() {
+    var pref = localStorage.getItem('themePref');
+    if (pref === 'light' || pref === 'dark' || pref === 'system') return pref;
+    // One-time migration from legacy key (stored resolved value, not pref)
+    var legacy = localStorage.getItem('theme');
+    if (legacy === 'light' || legacy === 'dark') {
+      localStorage.setItem('themePref', legacy);
+      localStorage.removeItem('theme');
+      return legacy;
     }
-    // Default to system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return 'system'; // Default: follow system on first visit
   }
 
-  function getNextTheme(current) {
-    return current === 'light' ? 'dark' : 'light';
+  function setPref(pref) {
+    localStorage.setItem('themePref', pref);
   }
 
-  function updateButton() {
-    var current = getCurrentTheme();
-    var next = getNextTheme(current);
-    btn.setAttribute('data-mode', current);
+  // Resolve a user preference to the actual applied theme value
+  function resolveApplied(pref) {
+    return pref === 'system'
+      ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+      : pref;
+  }
+
+  // Cycle order: light → dark → system → light
+  function getNextPref(pref) {
+    if (pref === 'light') return 'dark';
+    if (pref === 'dark') return 'system';
+    return 'light';
+  }
+
+  function updateButton(pref) {
+    var next = getNextPref(pref);
+    btn.setAttribute('data-mode', pref);
     btn.setAttribute('data-tooltip', next.charAt(0).toUpperCase() + next.slice(1));
   }
 
-  function applyTheme(theme) {
-    html.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+  function applyTheme(pref) {
+    html.setAttribute('data-theme', resolveApplied(pref));
+    updateButton(pref);
   }
 
-  function showFeedback(theme) {
+  function showFeedback(pref) {
+    var label = pref.charAt(0).toUpperCase() + pref.slice(1);
     var feedback = document.createElement('div');
     feedback.className = 'theme-feedback';
-    feedback.textContent = 'Theme set to ' + (theme.charAt(0).toUpperCase() + theme.slice(1));
+    feedback.textContent = 'Theme set to ' + label;
     document.body.appendChild(feedback);
-
     setTimeout(function () {
       feedback.classList.add('hide');
-      setTimeout(function () {
-        document.body.removeChild(feedback);
-      }, 300);
+      setTimeout(function () { document.body.removeChild(feedback); }, 300);
     }, 2000);
   }
 
-  // Initialize
-  var initialTheme = getCurrentTheme();
-  applyTheme(initialTheme);
-  updateButton();
+  // Initialize — apply current pref to DOM without writing to storage
+  applyTheme(getPref());
 
-  // Toggle between light and dark
+  // Cycle on click: persist new pref, apply, show feedback
   btn.addEventListener('click', function () {
-    var current = getCurrentTheme();
-    var next = getNextTheme(current);
+    var next = getNextPref(getPref());
+    setPref(next);
     applyTheme(next);
-    updateButton();
     showFeedback(next);
     // Suppress hover icon swap briefly so sticky-hover on touch doesn't
     // show the wrong icon after the theme changes
@@ -59,13 +73,10 @@
     setTimeout(function () { btn.classList.remove('no-hover'); }, 500);
   });
 
-  // Listen for system theme changes
+  // Re-apply when system theme changes, but only if user is on 'system' pref
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
-    var stored = localStorage.getItem('theme');
-    if (!stored) {
-      var theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      html.setAttribute('data-theme', theme);
-      updateButton();
+    if (getPref() === 'system') {
+      html.setAttribute('data-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     }
   });
 })();

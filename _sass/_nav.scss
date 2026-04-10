@@ -74,7 +74,12 @@
 
   &:hover {
     border-color: var(--border-strong);
-    transform: rotate(15deg);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      transform: rotate(15deg);
+    }
   }
 
   @media (hover: hover) {
@@ -169,12 +174,16 @@
 // Default: show current mode icon
 .theme-toggle[data-mode="light"] .icon-sun { display: block; }
 .theme-toggle[data-mode="dark"] .icon-moon { display: block; }
+.theme-toggle[data-mode="system"] .icon-system { display: block; }
 
-// Hover: show next mode icon (pointer devices only — touch devices keep current icon)
+// Hover: preview next mode icon (pointer devices only — touch devices keep current icon)
+// Cycle order: light → dark → system → light
 // .no-hover is added briefly after a click to prevent sticky-hover showing the wrong icon
 @media (hover: hover) {
   .theme-toggle:not(.no-hover):hover .icon-sun { display: none; }
   .theme-toggle:not(.no-hover):hover .icon-moon { display: none; }
+  .theme-toggle:not(.no-hover):hover .icon-system { display: none; }
   .theme-toggle:not(.no-hover)[data-mode="light"]:hover .icon-moon { display: block; }
-  .theme-toggle:not(.no-hover)[data-mode="dark"]:hover .icon-sun { display: block; }
+  .theme-toggle:not(.no-hover)[data-mode="dark"]:hover .icon-system { display: block; }
+  .theme-toggle:not(.no-hover)[data-mode="system"]:hover .icon-sun { display: block; }
 }

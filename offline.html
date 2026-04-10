@@ -6,8 +6,17 @@
   <title>Offline — Comepaolo</title>
   <script>
     (function() {
-      var stored = localStorage.getItem('theme');
-      var theme = (stored === 'light' || stored === 'dark') ? stored
+      var pref = localStorage.getItem('themePref');
+      if (!pref) {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light' || legacy === 'dark') {
+          pref = legacy;
+          localStorage.setItem('themePref', legacy);
+          localStorage.removeItem('theme');
+        }
+      }
+      var theme = (pref === 'light' || pref === 'dark')
+        ? pref
         : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', theme);
     })();
