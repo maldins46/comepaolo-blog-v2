@@ -96,7 +96,6 @@ I brainstormed architectures, aiming for modern tech stack performance while kee
 | **Hosting** | **Vercel** | `€0` | Seamless deployment and incredible loading speeds. |
 | **Database** | **Supabase** (PostgreSQL) | `€0` | Relational powerhouse on a generous free tier. |
 | **Assistant** | **Claude Code** | Sponsored | Handled the heavy boilerplate lifting in seconds. |
-| **Assistant** | **Claude Code** | Sponsored | Handled the heavy boilerplate lifting in seconds. |
 | **Domain** | **canestreet.it** (GoDaddy) | `€10 /year` | Sticked to the provider since i have previous sites here (using other ones i could have expeded even less). |
 
 

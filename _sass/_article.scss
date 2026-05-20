@@ -226,6 +226,36 @@
   li {
     margin-bottom: 8px;
   }
+
+  table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  th, td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--bg-subtle);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  tbody tr:nth-child(even) td {
+    background: var(--bg-subtle);
+  }
 }
 
 .article-tags-top {
