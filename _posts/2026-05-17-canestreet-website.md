@@ -12,7 +12,7 @@ It looks exactly like what a professional tournament needs. And, as you might ha
 
 Canestreet is the name of a small summer basketball tournament we host every year in my hometown Jesi, Italy. We’ve been running it for eight years now. What started out as a casual joke among friends has evolved into a highly anticipated summer event. And with that growth came a mountain of logistical headaches.
 
-This article isn’t about the tournament itself (I’ve written [a whole other piece on that](https://riccardomaldini.it/blog/canestreet-3x3), which I highly recommend reading first). Instead, this is a spin-off story. It’s a deep dive into a tool I briefly mentioned in the main article, but one that deserves its own spotlight: **the Canestreet digital ecosystem**.
+This article isn’t about the tournament itself (I’ve written [a whole other piece on that](https://riccardomaldini.it/blog/canestreet-3x3)). Instead, this is a spin-off story. It’s a deep dive into a tool I briefly mentioned in the main article, but one that deserves its own spotlight: **the Canestreet digital ecosystem**.
 
 ---
 
@@ -26,10 +26,10 @@ To give the event a slight digital footprint, we created [an Instagram page](htt
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/early-instagram-post.png" alt="Instagram post from the early days">
-  <figcaption>One of the Instagram Posts from the early days. What a simpatico umorista that I was.</figcaption>
+  <figcaption>One of the Instagram Posts from the early days. What a simpatico umorista that I was</figcaption>
 </figure>
 
-People absolutely loved the tournament. We kept replicating the model year after year, even when we upgraded to a much larger playground. For nearly five years, Instagram remained our de facto point of contact with the outside world.
+We kept replicating the model year after year, even when we upgraded to a much larger playground. For nearly five years, Instagram remained our de facto point of contact with the outside world.
 
 On the organizational side, however, we needed a bit more structure to track rounds, points, and final brackets. Pen and paper quickly became a nightmare for a tournament with more than 50 players. Our grand upgrade? **A massive web of Google Sheets**. At the time, it was a medium perfectly tailored to the size of our needs. But as the tournament continued to balloon, we began craving something that felt a bit more professional.
 
@@ -45,6 +45,11 @@ On the organizational side, however, we needed a bit more structure to track rou
 We managed to run the tournament for three consecutive years before Covid brought everything to a grinding halt. That forced hiatus gave us time to rethink our next steps. More importantly for this story, it handed me, as a programmer, an abundance of free time to invest in whatever random side project crossed my mind.
 
 That lockdown boredom was the exact cradle where **the first version of the Canestreet website was born**.
+
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/old-website.png" alt="Homepage of the old website. Slay">
+  <figcaption>Homepage of the old website. Slay</figcaption>
+</figure>
 
 I wanted to give the tournament a proper virtual home. Instagram would still be our primary way to engage users, but like any growing entity, we needed a dedicated space on the web to showcase who we were outside of social media silos. Let's be honest: an Instagram page isn’t the best business card when you're pitching to a serious potential corporate sponsor.
 
@@ -63,11 +68,11 @@ Yes, I’m talking about **WordPress**.
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/wordpress-scientist.png" alt="That's how I'm imaging me while working on a Wordpress projects (credits: Nano Banana)">
-  <figcaption>That's how I'm imaging me while working on a Wordpress project (credits: Nano Banana)</figcaption>
+  <figcaption>That's how I imagine me working on a Wordpress project (credits: Nano Banana)</figcaption>
 </figure>
 
 
-I genuinely disliked (and still dislike) WordPress. It’s a CMS born for simple blogging that has been aggressively bent, twisted, and forced by themes and plugins to act as a solution for every website requirement under the sun. It’s flexible, sure, but forcing a tool so far outside its original scope always felt fundamentally wrong to me.
+I genuinely dislike WordPress. It’s a CMS born for simple blogging that has been aggressively bent, twisted, and forced by themes and plugins to act as a solution for every website requirement under the sun. It’s flexible, sure, but forcing a tool so far outside its original scope always felt fundamentally wrong to me.
 
 Yet, because it was an industry standard, it was the most pragmatic place to start experimenting. I knew that learning my way around a tool used by half the internet would eventually be a useful skill to have in my back pocket.
 
@@ -78,8 +83,8 @@ So, I held my nose, bought the domain `thecanestreet.it`, and linked it to a hos
 | **Framework** | **WordPress** | Free (OSS) | The industry standard for quickly building functional web spaces. |
 | **Page Builder** | **Elementor Plugin** | Free Tier | Allowed drag-and-drop page creation without deep frontend experience. I didn't want to invest too much time on that. |
 | **Sports Engine** | **WP Club Manager** | Free | A pre-built plugin used to handle matches, players, and standings. |
-| **Registrations** | **Google Forms** (iFrame) | `€0` | Embedded directly into the page to collect user sign-up data. |
-| **Hosting & Domain** | **Self-Hosted** | `€25 /year` | Necessary to get a custom domain, Linux hosting and the WordPress database. |
+| **Registrations** | **Google Forms** (iFrame) | €0 | Embedded directly into the page to collect user sign-up data. |
+| **Hosting & Domain** | **Self-Hosted** | €25/year | Necessary to get a custom domain, Linux hosting and the WordPress database. |
 
 Quite cheap, but not free as you can see. I spent a month tinkering with the Elementor plugin, building out the pages we needed one by one. I built the homepage, added an "About" and "Contact" page, and even embedded a PDF viewer to display the official FIBA 3x3 rules. Finally, I spun up a news section utilizing the native WordPress blog architecture.
 
@@ -102,20 +107,31 @@ Over the previous several months, generative AI tools designed specifically for 
 
 These tools successfully took over the heavy lifting of concrete syntax and boilerplate implementation, freeing us up to focus on high-level architecture, system design, and product specifications. I was fortunate enough to be working at a company that actively encourages using tools like **ClaudeCode**, or **OpenCode**, even subsidizing licenses for our personal development. It’s a massive win-win: continuous self-training for the employees, and unlimited building potential for the engineers.
 
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/walk-with-copilot.png" alt="She just wanted an ice cream">
+  <figcaption>She just wanted an ice cream</figcaption>
+</figure>
+
+
 I decided to burn down the old WordPress site and build a custom application from scratch. I didn't want just a public showcase anymore; I wanted a fully bespoke Enterprise Resource Planning (ERP) system tailored perfectly to the chaos of a 3x3 basketball tournament.
 
 I brainstormed architectures, aiming for modern tech stack performance while keeping hosting costs at a grand total of zero, or near-zero Euros per year.
 
 | Component | Technology | Cost | Why We Used It |
 | :--- | :--- | :--- | :--- |
-| **Framework** | **Next.js** (React) | `€0` | Single codebase for both frontend UI and API backend routes. |
-| **Hosting** | **Vercel** | `€0` | Seamless deployment and incredible loading speeds. |
-| **Database** | **Supabase** (PostgreSQL) | `€0` | Relational powerhouse on a generous free tier. |
+| **Framework** | **Next.js** (React) | €0 | Single codebase for both frontend UI and API backend routes. |
+| **Hosting** | **Vercel** | €0 | Seamless deployment and incredible loading speeds. |
+| **Database** | **Supabase** (PostgreSQL) | €0 | Relational powerhouse on a generous free tier. |
 | **Assistant** | **Claude Code** | Sponsored | Handled the heavy boilerplate lifting in seconds. |
-| **Domain** | **canestreet.it** (GoDaddy) | `€10 /year` | Sticked to the provider since i have previous sites here (using other ones i could have expeded even less). |
+| **Domain** | **canestreet.it** (GoDaddy) | €10/year | Sticked to the provider since i have previous sites here (using other ones i could have expeded even less). |
 
 
 I had a functional, bare-bones prototype running in less than an afternoon. I was completely stunned. In just a few hours, I managed to build the core repository skeleton alongside clean, responsive designs for the home, about, contact, and rules sections.
+
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/website-pc.png" alt="Homepage of the old new website">
+  <figcaption>Homepage of the new website. Type shit</figcaption>
+</figure>
 
 Galvanized by this newfound velocity, I kept iterating. Within a week, the public-facing application was complete. The following week, I turned my attention to building a custom administrative back-office dashboard.
 
@@ -126,6 +142,11 @@ Built entirely around the real pain points we gathered over seven years of runni
 * **The Court Jumbotron (Showcase Screen)**: Solving an old logistical problem, I built a dedicated "Showcase View" meant to be projected on TVs or laptops around the courts. It loops through real-time scores, upcoming match timetables, and active sponsor loops without needing manual refreshes.
 * **Three-Point Contest Module**: A streamlined micro-dashboard to register players for our annual shootout, input their scores live, and broadcast a real-time leaderboard to the crowd.
 
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/mobile-screens.jpg" alt="Some screenshots from the mobile version of the website">
+  <figcaption>Some screenshots from the mobile version of the website. Fully responsive, 100% compatible with every device.</figcaption>
+</figure>
+
 ---
 
 ## Conclusion
@@ -135,3 +156,8 @@ Looking back at the trajectory of this project, it is genuinely incredible what 
 At the same time, working on this project clearly showed to me how it is easy to fall in rabbit holes, let the architecture degenerate into an unmaintainable mess. As engineers, it's more critical than ever that we maintain absolute control over the code, thoroughly understand the output, and never go on "full auto-pilot." Total reliance on automation is the easiest way to make a complex software project fail.
 
 The best part? **The entire Canestreet platform is completely open-source and [available on my GitHub](https://github.com/maldins46/CanestreetWebsite)**! The tournament is my hobby, and this code is simply the engineering cherry on top. If you run a local sports tournament and want a tailored, automated management system to make your event shine, feel free to clone the repository. Just remember to give credit to a developer from Jesi and dintorni 🥰
+
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/canestreet-github.png" alt="The Canestreet Website Project on GitHub">
+  <figcaption>The Canestreet Website Project on GitHub</figcaption>
+</figure>
