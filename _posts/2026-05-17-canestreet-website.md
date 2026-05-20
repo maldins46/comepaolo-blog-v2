@@ -24,9 +24,19 @@ In those early days, we didn't need much technology. Word of mouth was our prima
 
 To give the event a slight digital footprint, we created [an Instagram page](https://www.instagram.com/canestreet3x3). It was mostly fueled by memes, funny team descriptions, event announcements, and stories updating the match results. It was the perfect, low-friction hotspot to keep players engaged.
 
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/early-instagram-post.png" alt="Instagram post from the early days">
+  <figcaption>One of the Instagram Posts from the early days. What a simpatico umorista that I was.</figcaption>
+</figure>
+
 People absolutely loved the tournament. We kept replicating the model year after year, even when we upgraded to a much larger playground. For nearly five years, Instagram remained our de facto point of contact with the outside world.
 
 On the organizational side, however, we needed a bit more structure to track rounds, points, and final brackets. Pen and paper quickly became a nightmare for a tournament with more than 50 players. Our grand upgrade? **A massive web of Google Sheets**. At the time, it was a medium perfectly tailored to the size of our needs. But as the tournament continued to balloon, we began craving something that felt a bit more professional.
+
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/standing-gsheet.png" alt="The Google Sheet we used in the first editions">
+  <figcaption>The Google Sheet we used in the first editions. The whole tournament was based on that.</figcaption>
+</figure>
 
 ---
 
@@ -50,6 +60,12 @@ Reconciling all of these features was a massive challenge for me at the time bec
 Following the breadcrumbs of convenience led me straight to a precise technology. I had to strike a deal with the framework I disliked the most—the monster that powers half the web, yet is widely mocked by developers everywhere.
 
 Yes, I’m talking about **WordPress**.
+
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/wordpress-scientist.png" alt="That's how I'm imaging me while working on a Wordpress projects (credits: Nano Banana)">
+  <figcaption>That's how I'm imaging me while working on a Wordpress project (credits: Nano Banana)</figcaption>
+</figure>
+
 
 I genuinely disliked (and still dislike) WordPress. It’s a CMS born for simple blogging that has been aggressively bent, twisted, and forced by themes and plugins to act as a solution for every website requirement under the sun. It’s flexible, sure, but forcing a tool so far outside its original scope always felt fundamentally wrong to me.
 
