@@ -8,13 +8,29 @@ permalink: /about/
   <div class="about-intro">
     <img src="{{ site.baseurl }}/assets/images/myself.jpg" alt="Riccardo Maldini" class="about-avatar">
     <div class="about-text">
-      <h1>Riccardo Maldini</h1>
-      <p class="about-tagline">Born to make fum&egrave;, forced to scale legacy systems.</p>
+      <h1>About me and this space</h1>
       <div class="about-bio">
-        <p>To anyone wandering around here, welcome! My name is <strong>Riccardo Maldini</strong>, and this is my personal blog. This is where I've decided to collect my thoughts, projects, things I've done, and ideas I've had.</p>
-        <p>I'm a software engineer, currently based in Milan. I was born and raised in Jesi, a small town in central Italy. I moved to Milan for work — and because I liked the city. Not everyone feels the same about Milan, but this is how I see things right now: I've met good people, there's always something to do, and I'm just happy to live in the moment.</p>
-        <p>If you've visited <a href="https://riccardomaldini.it">riccardomaldini.it</a> in the past, you might remember that it looked quite different. It was basically a <strong>portfolio site</strong>, listing my skills, education, and projects. Eventually, I decided to take a different approach. I thought: I have a personal domain — it should be personal. The portfolio concept was cool, but it felt limiting. So, here I am!</p>
-        <p>You can still check out <a href="https://www.linkedin.com/in/riccardo-maldini-a6b684132">my LinkedIn</a> or download <a href="https://github.com/maldins46/MaldiniCV/releases/latest/download/cv-maldini.pdf">my CV here</a> in PDF format, of course, if this is what you're seeking!</p>
+        <p>
+       What's the purpose of owning a personal blog in 2026?
+        </p>
+        <p>
+        With all the AI tools at our disposal, I could easily fill this website with flawless, advanced technical articles. Or maybe, another anonymous portfolio website. So, are you seeing another AI sloppy page?
+        </p>
+        <p>
+        Short answer is no, obviously. My name is <strong>Riccardo Maldini</strong>, and this is my personal blog. This is where I've decided to collect my thoughts, projects, things I've done, and ideas I've had.
+        </p>
+
+        <p>
+        I'm a <strong>software engineer</strong>, currently based in Milan. I was born and raised in Jesi, a small town in central Italy. I moved to Milan for work, and because (unpopular opinion) I liked the city.
+        </p>
+
+        <p>
+        Writing is how we clarify our thoughts, share our projects, and truly master a topic. It forces you to slow down and deepen your understanding. This place is a <strong>retrospective</strong>: a way for me to document past projects, ensure I don't forget the lessons I've learned, and value the path that brought me here.
+        </p>
+       
+        <p>
+        Enjoy the reading!
+        </p>
       </div>
     </div>
   </div>
