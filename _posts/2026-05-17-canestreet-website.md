@@ -1,7 +1,7 @@
 ---
 title: "The Canestreet Website: From a Simple Showcase to the Tournament's Core ERP"
 date: 2026-05-17
-excerpt: "The website or our tournament is more than that. It is a full ERP tailored to our need. And the history of that, a spinoff it is worth to tell."
+excerpt: "The website of the Canestreet is more than just a website. It is a full ERP tailored to our need. And the history of that, a spin-off it is worth to tell."
 tags: [projects, basket, react, vercel]
 image: /assets/article_images/2026-05-07-canestreet-website/cover-image.jpg
 ---
@@ -10,9 +10,9 @@ If you type [`canestreet.it`](http://canestreet.it) into your browser's search b
 
 It looks exactly like what a professional tournament needs. And, as you might have guessed, it’s a website I built 😏
 
-Canestreet is the name of a small summer basketball tournament we host every year in my hometown Jesi, Italy. We’ve been running it for eight years now. What started out as a casual joke among friends has evolved into a highly anticipated summer event. And with that growth came a mountain of logistical headaches.
+Canestreet is the name of a small summer basketball 3x3 tournament we host every year in my hometown Jesi, Italy. We’ve been running it for eight years now. What started out as a casual joke among friends has evolved into a highly anticipated summer event. And with that growth came a mountain of logistical headaches.
 
-This article isn’t about the tournament itself (I’ve written [a whole other piece on that](https://riccardomaldini.it/blog/canestreet-3x3)). Instead, this is a spin-off story. It’s a deep dive into a tool I briefly mentioned in the main article, but one that deserves its own spotlight: **the Canestreet digital ecosystem**.
+This article isn’t about the tournament itself (there is [a whole other piece on that](https://riccardomaldini.it/blog/canestreet-3x3)). Instead, this is a spin-off story. It’s a deep dive into a tool I briefly mentioned in the main article, but one that deserves its own spotlight: **the Canestreet digital ecosystem**.
 
 ---
 
@@ -26,7 +26,7 @@ To give the event a slight digital footprint, we created [an Instagram page](htt
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/early-instagram-post.png" alt="Instagram post from the early days">
-  <figcaption>One of the Instagram Posts from the early days. What a simpatico umorista that I was</figcaption>
+  <figcaption>One of the Instagram Posts from the early days. What a simpatico umorista I was</figcaption>
 </figure>
 
 We kept replicating the model year after year, even when we upgraded to a much larger playground. For nearly five years, Instagram remained our de facto point of contact with the outside world.
@@ -105,7 +105,7 @@ Then came the dawn of 2026, and everything shifted.
 
 Over the previous several months, generative AI tools designed specifically for coding evolved from amusing novelties into powerhouse assistants. The launch of advanced coding models completely revolutionized our day-to-day engineering workflows.
 
-These tools successfully took over the heavy lifting of concrete syntax and boilerplate implementation, freeing us up to focus on high-level architecture, system design, and product specifications. I was fortunate enough to be working at a company that actively encourages using tools like **ClaudeCode**, or **OpenCode**, even subsidizing licenses for our personal development. It’s a massive win-win: continuous self-training for the employees, and unlimited building potential for the engineers.
+These tools successfully took over the heavy lifting of concrete syntax and boilerplate implementation, freeing us up to focus on high-level architecture, system design, and product specifications. I was fortunate enough to be working at a company that actively encourages using tools like **Claude Code**, or **Open Code**, even subsidizing licenses for our personal development. It’s a massive win-win: continuous self-training for the employees, and unlimited building potential for the engineers.
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/walk-with-copilot.png" alt="She just wanted an ice cream">
@@ -155,7 +155,7 @@ Looking back at the trajectory of this project, it is genuinely incredible what 
 
 At the same time, working on this project clearly showed to me how it is easy to fall in rabbit holes, let the architecture degenerate into an unmaintainable mess. As engineers, it's more critical than ever that we maintain absolute control over the code, thoroughly understand the output, and never go on "full auto-pilot." Total reliance on automation is the easiest way to make a complex software project fail.
 
-The best part? **The entire Canestreet platform is completely open-source and [available on my GitHub](https://github.com/maldins46/CanestreetWebsite)**! The tournament is my hobby, and this code is simply the engineering cherry on top. If you run a local sports tournament and want a tailored, automated management system to make your event shine, feel free to clone the repository. Just remember to give credit to a developer from Jesi and dintorni 🥰
+The best part? **The entire Canestreet platform is completely open-source and [available on my GitHub](https://github.com/maldins46/CanestreetWebsite)**! The tournament is my hobby, and this code is simply the engineering cherry on top. If you run a local sports tournament and want a tailored, automated management system to make your event shine, feel free to clone the repository. Just remember to give credit to your favourite developer from Jesi 🥰
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/canestreet-github.png" alt="The Canestreet Website Project on GitHub">
