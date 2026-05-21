@@ -8,28 +8,25 @@ permalink: /about/
   <div class="about-intro">
     <img src="{{ site.baseurl }}/assets/images/myself.jpg" alt="Riccardo Maldini" class="about-avatar">
     <div class="about-text">
-      <h1>About me and this space</h1>
+      <h1>Who I am, and what's this space</h1>
       <div class="about-bio">
         <p>
-       What's the purpose of owning a personal blog in 2026?
+          What's the purpose of owning a personal blog in 2026?
         </p>
         <p>
-        With all the AI tools at our disposal, I could easily fill this website with flawless, advanced technical articles. Or maybe, another anonymous portfolio website. So, are you seeing another AI sloppy page?
+          With all the AI tools at our disposal, I could easily fill this website with flawless, AI-generated technical articles. Or maybe just turn this into an anonymous portfolio website. Is this just another sloppy AI page?
         </p>
         <p>
-        Short answer is no, obviously. My name is <strong>Riccardo Maldini</strong>, and this is my personal blog. This is where I've decided to collect my thoughts, projects, things I've done, and ideas I've had.
+          The short answer is no, obviously. My name is <strong>Riccardo Maldini</strong>, and this is my personal blog. This is where I've decided to collect my thoughts, projects, things I've done, and ideas I've had.
         </p>
-
         <p>
-        I'm a <strong>software engineer</strong>, currently based in Milan. I was born and raised in Jesi, a small town in central Italy. I moved to Milan for work, and because (unpopular opinion) I liked the city.
+          I'm a <strong>software engineer</strong>, currently based in Milan. I was born and raised in Jesi, a small town in central Italy. I moved to Milan for work and because (unpopular opinion) I actually like the city.
         </p>
-
         <p>
-        Writing is how we clarify our thoughts, share our projects, and truly master a topic. It forces you to slow down and deepen your understanding. This place is a <strong>retrospective</strong>: a way for me to document past projects, ensure I don't forget the lessons I've learned, and value the path that brought me here.
+          Writing is how we clarify our thoughts, share our projects, and truly master a topic. It forces us to slow down and deepen our understanding. This place is a <strong>retrospective</strong>: a way for me to document past projects, ensure I don't forget the lessons I've learned, and value the path that brought me here.
         </p>
-       
         <p>
-        Enjoy the reading!
+          Enjoy the reading!
         </p>
       </div>
     </div>
