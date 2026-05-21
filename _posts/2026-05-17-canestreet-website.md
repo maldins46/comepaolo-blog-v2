@@ -1,9 +1,10 @@
 ---
 title: "The Canestreet Website: From a Simple Showcase to the Tournament's Core ERP"
 date: 2026-05-17
-excerpt: "The website of the Canestreet is more than just a website. It is a full ERP tailored to our need. And the history of that, a spin-off it is worth to tell."
+excerpt: "Canestreet's website is more than just a site; it's a full ERP tailored to our needs. And the story of how it spun off is definitely worth telling."
 tags: [projects, basket, react, vercel]
 image: /assets/article_images/2026-05-07-canestreet-website/cover-image.jpg
+featured: true
 ---
 
 If you type [`canestreet.it`](http://canestreet.it) into your browser's search bar, you’ll land on a sleek, modern website. The subject is instantly clear: a summer basketball tournament. The splash screen greets you with action shots from the courts, and a quick glance reveals everything you’d expect from a sports hub: team registration, live results, official rules, and a curated "About" section.

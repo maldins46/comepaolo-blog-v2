@@ -4,7 +4,6 @@ date: 2025-06-22
 excerpt: "Summer, 2018 — Jesi. It was one of those summers when time feels endless. And Michele had a crazy idea."
 tags: [basketball, sport]
 image: /assets/article_images/2025-06-22-canestreet/cover-image.jpg
-featured: true
 ---
 
 **Summer, 2018 — Jesi.**
