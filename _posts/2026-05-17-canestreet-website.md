@@ -7,7 +7,7 @@ image: /assets/article_images/2026-05-07-canestreet-website/cover-image.jpg
 featured: true
 ---
 
-If you type [`canestreet.it`](http://canestreet.it) into your browser's search bar, you’ll land on a sleek, modern website. The subject is instantly clear: a summer basketball tournament. The splash screen greets you with action shots from the courts, and a quick glance reveals everything you’d expect from a sports hub: team registration, live results, official rules, and a curated "About" section.
+If you type [`canestreet.it`](http://canestreet.it) into your browser's search bar, you’ll land on a sleek, modern website. The subject is instantly clear: a summer basketball tournament. The splash screen greets you with action shots from the past editions, and a quick glance reveals everything you’d expect from a sports hub. Team registration, live results, official rules, and a curated about section.
 
 It looks exactly like what a professional tournament needs. And, as you might have guessed, it’s a website I built 😏
 
@@ -59,7 +59,7 @@ Like any good engineer, I started by collecting requirements. What does a tourna
 * A **Homepage**: A visual showcase with photos and a compelling description of the event.
 * **Contacts**: Where to find us, and an easy way for local businesses to reach the main organizer for sponsorships.
 * A **News** Section: A place for updates that could be easily shared via a single permalink.
-* The **Wishlist**: A registration portal, an interactive rules page, and live match results.
+* Some **nice-to-have**: A registration portal, an interactive rules page, and live match results.
 
 Reconciling all of these features was a massive challenge for me at the time because my web development experience was pretty limited. I had experimented with a few small projects using Angular and headless CMSs (see [the origins of CovidAnalysis](https://riccardomaldini.it/blog/covidanalysis) and [my blog](https://riccardomaldini.it/blog/my-website) for more funny stories!), but I had never built a comprehensive, production-grade web application.
 
@@ -91,7 +91,7 @@ Quite cheap, but not free as you can see. I spent a month tinkering with the Ele
 
 This first iteration actually survived for four years. Over time, I expanded its capabilities by adding a third-party plugin for live sports casting and embedding a basic Google Form iFrame to handle player sign-ups.
 
-The solution was minimal, but it got the job done. The glaring downside? The sheer amount of manual data manipulation required behind the scenes:
+The solution was minimal, but it got the job done. The glaring downside? **The sheer amount of manual data manipulation required** behind the scenes. The pain points were two in particular:
 
 * **Registrations**: Teams submitted forms, but everything after that was manual labor. We had to manually export the data from Google Sheets, email the team captain to confirm, and spend days chasing people down to validate physical sports insurance and federation certificates.
 * **Live Scoring**: The sports-casting plugin required an immense amount of configuration. Updating scores during a fast-paced game was tedious, and getting brackets to align properly with complex FIBA tie-breaker rules required constant manual intervention.
@@ -106,7 +106,7 @@ Then came the dawn of 2026, and everything shifted.
 
 Over the previous several months, generative AI tools designed specifically for coding evolved from amusing novelties into powerhouse assistants. The launch of advanced coding models completely revolutionized our day-to-day engineering workflows.
 
-These tools successfully took over the heavy lifting of concrete syntax and boilerplate implementation, freeing us up to focus on high-level architecture, system design, and product specifications. I was fortunate enough to be working at a company that actively encourages using tools like **Claude Code**, or **Open Code**, even subsidizing licenses for our personal development. It’s a massive win-win: continuous self-training for the employees, and unlimited building potential for the engineers.
+These tools successfully took over the heavy lifting of concrete syntax and boilerplate implementation, freeing us up to focus on high-level architecture, system design, and product specifications. I was fortunate enough to be working at a company that actively encourages using tools like **Claude Code**, even subsidizing licenses for our personal development. It’s a massive win-win: continuous self-training for the employees, and unlimited building potential for the engineers.
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/walk-with-copilot.png" alt="She just wanted an ice cream">
@@ -140,7 +140,7 @@ Built entirely around the real pain points we gathered over seven years of runni
 * **Automated Registrations**: Teams register directly via custom web forms. The app parses the data, alerts the staff, and fires off beautiful automated confirmation emails once approved.
 * **FIBA-Compliant Live Engine**: No more fighting generic sports plugins. Our backend automatically takes registered teams, generates round-robin groups, dynamically calculates standings based on complex FIBA 3x3 tie-breaker rules, and populates the playoff brackets in real-time for spectators.
 * **Dynamic Sponsor Management**: Sponsors can be added, categorized (Gold, Silver, Technical), and updated instantly via the dashboard, automatically rendering them across the platform.
-* **The Court Jumbotron (Showcase Screen)**: Solving an old logistical problem, I built a dedicated "Showcase View" meant to be projected on TVs or laptops around the courts. It loops through real-time scores, upcoming match timetables, and active sponsor loops without needing manual refreshes.
+* **The Court Jumbotron**: Solving an old logistical problem, I built a dedicated "Showcase View" meant to be projected on TVs or laptops around the courts. It loops through real-time scores, upcoming match timetables, and active sponsor loops without needing manual refreshes.
 * **Three-Point Contest Module**: A streamlined micro-dashboard to register players for our annual shootout, input their scores live, and broadcast a real-time leaderboard to the crowd.
 
 <figure>
@@ -150,13 +150,17 @@ Built entirely around the real pain points we gathered over seven years of runni
 
 ---
 
-## Conclusion
+## Conclusion and Takeaways
 
-Looking back at the trajectory of this project, it is genuinely incredible what a single independent developer can achieve with modern tools. Building a system of this complexity with my limited free time **would have easily taken me several months of grueling weekend work in the past**.
+Looking back at the trajectory of this project, it is genuinely incredible what a single independent developer can achieve with modern tools. Building a system of this complexity in my limited free time **would have easily taken me several months of grueling weekend work in the past**.
 
-At the same time, working on this project clearly showed to me how it is easy to fall in rabbit holes, let the architecture degenerate into an unmaintainable mess. As engineers, it's more critical than ever that we maintain absolute control over the code, thoroughly understand the output, and never go on "full auto-pilot." Total reliance on automation is the easiest way to make a complex software project fail.
+Working with these AI tools as a developer can be overwhelming. In particular, when they were initially introduced, **the experience was almost addicting, like gambling**. You prompt your intentions, achieve your result, and cannot wait for your PC-shaped slot machine to let you insert the coin for the next round.
 
-The best part? **The entire Canestreet platform is completely open-source and [available on my GitHub](https://github.com/maldins46/CanestreetWebsite)**! The tournament is my hobby, and this code is simply the engineering cherry on top. If you run a local sports tournament and want a tailored, automated management system to make your event shine, feel free to clone the repository. Just remember to give credit to your favourite developer from Jesi 🥰
+It is important that you do not fall into that rabbit hole and that, with time and iteration, you learn how to steer this technology. Having this power in your hands without proper discipline would allow the architecture to degenerate into an unmaintainable mess.
+
+Let's remember that we are engineers at the end of the day. **We are responsible for the codebase**, not Mr. Claudio. It is more critical than ever that we maintain absolute control over the code, thoroughly understand the output, and never go on full autopilot. Total reliance on automation is the easiest way to make a complex software project fail.
+
+Do you know what's the best part of thiw project? **The entire Canestreet platform is completely open-source and [available on my GitHub](https://github.com/maldins46/CanestreetWebsite)**! The tournament is my hobby, and this code is simply the engineering cherry on top. If you run a local sports tournament and want a tailored, automated management system to make your event shine, feel free to clone the repository. Just remember to give credit to your favourite developer from Jesi 🥰
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-05-07-canestreet-website/canestreet-github.png" alt="The Canestreet Website Project on GitHub">
