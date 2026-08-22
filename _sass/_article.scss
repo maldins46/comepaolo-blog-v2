@@ -185,6 +185,40 @@
     color: var(--accent);
   }
 
+  .highlighter-rouge {
+    margin: 24px 0;
+
+    .highlight {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+
+      pre.highlight {
+        margin: 0;
+        padding: 18px 20px;
+      }
+
+      code {
+        background: none;
+        padding: 0;
+        border-radius: 0;
+        color: var(--text-primary);
+        font-size: 13px;
+        line-height: 1.6;
+        white-space: pre;
+      }
+
+      // Rouge token classes
+      .c, .c1, .cm, .cp { color: var(--code-comment); font-style: italic; } // comments
+      .k, .kd, .kn, .kp, .kr, .kt { color: var(--code-keyword); } // keywords
+      .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr, .ss { color: var(--code-string); } // strings
+      .nf, .nc, .nb, .nn { color: var(--code-function); } // functions/classes
+      .m, .mi, .mf, .mo, .mh { color: var(--code-number); } // numbers
+      .o, .p { color: var(--text-secondary); } // operators/punctuation
+    }
+  }
+
   blockquote {
     border-left: 3px solid var(--accent);
     padding: 8px 20px;
