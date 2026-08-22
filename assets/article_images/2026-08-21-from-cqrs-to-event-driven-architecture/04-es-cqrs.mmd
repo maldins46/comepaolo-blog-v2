@@ -1,0 +1,34 @@
+flowchart LR
+  C["<b>Client</b>"]
+  CS["<b>IncidentCommandService</b><br/><i>write side</i>"]
+  ES[("<b>Event store</b><br/><i>append only</i>")]
+  SN[("Snapshots<br/><i>every N events</i>")]
+  H["<b>Projection handler</b><br/><i>replays the stream</i>"]
+  QS["<b>IncidentQueryService</b><br/><i>read side</i>"]
+
+  subgraph RM["read models, shaped like the questions"]
+    direction TB
+    R1[("dashboard")]
+    R2[("search")]
+    R3[("last week")]
+  end
+
+  C -->|commands| CS
+  CS -->|appends| ES
+  ES -.->|shortcut for replay| SN
+  ES ==>|subscribes| H
+  H -->|async, the lag lives here| RM
+  C -->|queries| QS
+  QS -->|reads| RM
+
+  classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:2px
+  classDef main fill:#dbe7f5,stroke:#3d5a80,stroke-width:3px
+  classDef write fill:#fde8e8,stroke:#a33,stroke-width:2px
+  classDef read fill:#e8f7ec,stroke:#2d6a4f,stroke-width:2px
+  classDef comp fill:#eef0fb,stroke:#5b5ea6,stroke-width:2px
+  class ES main
+  class SN,R1,R2,R3 store
+  class CS write
+  class QS read
+  class C,H comp
+  style RM fill:#ffffff,stroke:#2d6a4f,stroke-width:2px,stroke-dasharray: 6 4

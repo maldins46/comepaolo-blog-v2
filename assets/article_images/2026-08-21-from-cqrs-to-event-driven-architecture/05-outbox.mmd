@@ -1,0 +1,18 @@
+flowchart LR
+  APP["Application<br/>handling a command"]
+
+  subgraph TX["ONE database transaction: both, or neither"]
+    direction TB
+    T1[("ORDERS")]
+    T2[("OUTBOX")]
+  end
+
+  APP --> T1
+  APP --> T2
+  T2 -->|reads unpublished rows| REL["Relay<br/>@Scheduled poller<br/>or LISTEN/NOTIFY"]
+  REL -->|at least once| BR{{"Message broker"}}
+
+  classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:2px
+  classDef tx fill:#fdf6e3,stroke:#b58900,stroke-width:3px
+  class T1,T2 store
+  style TX fill:#fdf6e3,stroke:#b58900,stroke-width:3px

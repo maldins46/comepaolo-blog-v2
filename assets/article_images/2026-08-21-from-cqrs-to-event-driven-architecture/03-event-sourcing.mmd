@@ -1,0 +1,20 @@
+flowchart LR
+  APP["<b>Application</b><br/><i>appends what happened</i>"]
+
+  subgraph Q["<b>Event queue</b>, in practice a broker"]
+    direction LR
+    E1["IncidentReported"] --> E2["IncidentTextChanged"] --> E3["IncidentResolved"]
+  end
+
+  APP --> Q
+  Q ==>|kept forever| ES[("<b>Event store</b><br/><i>append only</i>")]
+  Q -->|reacts| H1["<b>Notification handler</b><br/><i>emails the on-call engineer</i>"]
+  Q -->|reacts| H2["<b>Projection handler</b><br/><i>updates the incidents dashboard</i>"]
+
+  classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:3px
+  classDef ev fill:#fdf6e3,stroke:#b58900,stroke-width:2px
+  classDef comp fill:#eef0fb,stroke:#5b5ea6,stroke-width:2px
+  class ES store
+  class E1,E2,E3 ev
+  class APP,H1,H2 comp
+  style Q fill:#ffffff,stroke:#b58900,stroke-width:2px,stroke-dasharray: 6 4

@@ -1,0 +1,13 @@
+flowchart LR
+  C["<b>Client</b><br/><i>shows</i><br/>Incident View Model"]
+  E["<b>IncidentEndpoint</b><br/><i>speaks</i><br/>Incident DTO"]
+  S["<b>IncidentBusinessService</b><br/><i>works on</i><br/>Incident Business Model"]
+  D["<b>IncidentDAO</b><br/><i>persists</i><br/>Incident ER Model"]
+  DB[("<b>RDBMS</b>")]
+
+  C --> E --> S --> D --> DB
+
+  classDef layer fill:#eef0fb,stroke:#5b5ea6,stroke-width:2px
+  classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:2px
+  class C,E,S,D layer
+  class DB store

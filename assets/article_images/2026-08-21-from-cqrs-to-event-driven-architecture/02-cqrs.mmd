@@ -1,0 +1,15 @@
+flowchart LR
+  C["Client"]
+  C -->|writes| CS["IncidentCommandService"]
+  C -->|reads| QS["IncidentQueryService"]
+  CS --> WM["Write model<br/>rich, enforces the rules"]
+  QS --> RM["Read model<br/>flat, answers the question"]
+  WM --> DB[("Same database<br/>is perfectly fine")]
+  RM --> DB
+
+  classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:2px
+  classDef write fill:#fde8e8,stroke:#a33
+  classDef read fill:#e8f7ec,stroke:#2d6a4f
+  class DB store
+  class CS,WM write
+  class QS,RM read

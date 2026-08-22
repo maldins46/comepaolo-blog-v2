@@ -1,0 +1,24 @@
+flowchart LR
+  subgraph OS["Order Service"]
+    direction TB
+    ODB[("orders + outbox")]
+    REL["Relay"]
+    ODB --> REL
+  end
+
+  REL --> K{{"Kafka topic<br/>OrderPlaced"}}
+
+  K --> B["Billing"]
+  K --> I["Inventory"]
+  K --> S["Shipping"]
+  K --> A["Analytics"]
+
+  B --> BDB[("own DB")]
+  I --> IDB[("own DB")]
+  S --> SDB[("own DB")]
+  A --> ADB[("own DB")]
+
+  classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:2px
+  classDef svc fill:#e8f7ec,stroke:#2d6a4f
+  class ODB,BDB,IDB,SDB,ADB store
+  class B,I,S,A svc
