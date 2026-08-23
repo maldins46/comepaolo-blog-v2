@@ -99,6 +99,7 @@
   var toc = document.getElementById('articleToc');
   if (!toc) return;
   var links = toc.querySelectorAll('.toc-link');
+  var chapters = toc.querySelectorAll('.toc-h2');
   var headings = Array.prototype.map.call(links, function (link) {
     return document.getElementById(link.getAttribute('data-toc-target'));
   }).filter(Boolean);
@@ -118,6 +119,12 @@
     var link = toc.querySelector('.toc-link[data-toc-target="' + current.id + '"]');
     links.forEach(function (l) { l.classList.remove('active'); });
     if (link) link.classList.add('active');
+
+    // Only expand the sub-chapter list of the chapter currently being read
+    var section = link && (link.getAttribute('data-toc-parent') || link.getAttribute('data-toc-target'));
+    chapters.forEach(function (li) {
+      li.classList.toggle('expanded', li.getAttribute('data-toc-section') === section);
+    });
   }
 
   var ticking = false;

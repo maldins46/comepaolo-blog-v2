@@ -13,14 +13,42 @@
     <nav class="toc-nav">
       <ul>
         {% if has_intro %}
-        <li><a href="#articleContent" class="toc-link" data-toc-target="articleContent">Introduction</a></li>
+          {% assign h3_parts = h2_parts[0] | split: "<h3 " %}
+          {% assign h3_count = h3_parts.size | minus: 1 %}
+          <li class="toc-h2" data-toc-section="articleContent">
+            <a href="#articleContent" class="toc-link" data-toc-target="articleContent">Introduction</a>
+            {% if h3_count > 0 %}
+            <ul class="toc-sub">
+              {% for h3part in h3_parts offset: 1 %}
+                {% assign h3seg = h3part | split: '">' %}
+                {% assign h3slug = h3seg[0] | remove_first: 'id="' %}
+                {% assign h3title = h3seg[1] | split: '</h3>' | first | strip_html | strip %}
+                <li><a href="#{{ h3slug }}" class="toc-link toc-sublink" data-toc-target="{{ h3slug }}" data-toc-parent="articleContent">{{ h3title }}</a></li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
         {% endif %}
         {% for part in h2_parts offset: 1 %}
           {% assign seg = part | split: '">' %}
           {% assign slug = seg[0] | remove_first: 'id="' %}
           {% assign title_html = seg[1] | split: '</h2>' | first %}
           {% assign title = title_html | strip_html | strip %}
-          <li><a href="#{{ slug }}" class="toc-link" data-toc-target="{{ slug }}">{{ title }}</a></li>
+          {% assign h3_parts = part | split: "<h3 " %}
+          {% assign h3_count = h3_parts.size | minus: 1 %}
+          <li class="toc-h2" data-toc-section="{{ slug }}">
+            <a href="#{{ slug }}" class="toc-link" data-toc-target="{{ slug }}">{{ title }}</a>
+            {% if h3_count > 0 %}
+            <ul class="toc-sub">
+              {% for h3part in h3_parts offset: 1 %}
+                {% assign h3seg = h3part | split: '">' %}
+                {% assign h3slug = h3seg[0] | remove_first: 'id="' %}
+                {% assign h3title = h3seg[1] | split: '</h3>' | first | strip_html | strip %}
+                <li><a href="#{{ h3slug }}" class="toc-link toc-sublink" data-toc-target="{{ h3slug }}" data-toc-parent="{{ slug }}">{{ h3title }}</a></li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
         {% endfor %}
       </ul>
     </nav>
