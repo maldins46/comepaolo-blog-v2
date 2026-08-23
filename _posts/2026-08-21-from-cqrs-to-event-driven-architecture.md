@@ -15,7 +15,14 @@ The second came a while later, in a brainstorming session, when my manager sugge
 
 Two people I respect, using the same words for two problems that had nothing to do with each other. That was enough to send me reading properly. I knew the shape of the fix I wanted for my endpoint, *take the request, write it down, say "got it", do the work later*, but I didn't know its name.
 
-So take my hand, and let's walk through that investigation together. What I want to do here is connect a few tiles that were floating around separately in my head, and possibly in yours too: five patterns that keep coming up in the same conversations, what each one is really for, what it costs, and how they relate to one another. We start from a concrete need, that slow endpoint, and we end up somewhere far bigger than it. I'll spoil the ending now: most of the time what you need is much smaller than the premise.
+So take my hand, and let's walk through that investigation together. 
+
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/get-deep.jpg" alt="Let's get deep on this together :)">
+  <figcaption>Let's get deep on this together :)</figcaption>
+</figure>
+
+What I want to do here is connect a few tiles that were floating around separately in my head, and possibly in yours too: five patterns that keep coming up in the same conversations, what each one is really for, what it costs, and how they relate to one another. We start from a concrete need, that slow endpoint, and we end up somewhere far bigger than it. I'll spoil the ending now: most of the time what you need is much smaller than the premise.
 
 These are the five ideas we'll go through:
 
