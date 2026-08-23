@@ -26,10 +26,10 @@ What I want to do here is connect a few tiles that were floating around separate
 
 These are the five ideas we'll go through:
 
-1. **CQRS.** Split reads and writes into separate code paths. Cheap. Requires no events at all.
-2. **Event Sourcing.** Store facts instead of state. Expensive. Effectively forces CQRS on you.
-3. **Asynchronous Request-Reply.** Accept the request, return `202`, execute later.
-4. **Transactional Outbox + Listen To Yourself.** One transaction for your state and your message, so neither can go missing.
+1. **CQRS.** Split reads and writes into separate code paths.
+2. **Event Sourcing.** Store facts instead of state.
+3. **Asynchronous Request-Reply.** Accept the request, execute later.
+4. **Transactional Outbox (+ Listen To Yourself).** One transaction for your state and your message.
 5. **Event-Driven Architecture.** Publish the fact, let the rest of the company consume it.
 
 To compare them fairly, every step gets pointed at the same example: an **order management system**, the boring back end of any online shop. A customer places an order, changes the delivery address ten minutes later, pays, and eventually the thing ships. A small domain, familiar to everybody, and with one property that becomes important later.
@@ -278,6 +278,15 @@ There's a broader habit in here, and it's the part I'll actually reuse. When a p
 
 I never did end up needing an event store. What I needed was a table with a `status` column and a loop, which is a fairly humbling result for several weeks of reading. But I only trust that answer because I climbed all the way up first. And these days, when somebody drops "we could use events here" into a brainstorming session, I at least know which of the five things they're pointing at.
 
----
+## Sources
 
-*Michael Ploed's [SpringOne2GX 2015 talk on CQRS and Event Sourcing](https://www.youtube.com/watch?v=A0goyZ9F4bg) is the clearest single walkthrough of the event-sourced end of this story, and the source of the structure I followed here. For the case that CQRS is a much smaller thing than its reputation suggests, see Greg Young's [CQRS is not an Architecture](https://gregfyoung.wordpress.com/2012/09/09/cqrs-is-not-an-architecture/) and [Martin Fowler's bliki entry](https://martinfowler.com/bliki/CQRS.html). For a concrete outbox implementation in Spring Boot, [this repository](https://github.com/ChintaHari/springboot-transactional-outbox-pattern) is a good starting point.*
+- [CQRS and Event Sourcing](https://www.youtube.com/watch?v=A0goyZ9F4bg), Michael Ploed at SpringOne2GX 2015. The walkthrough I followed for steps one and two.
+- [CQRS is not an Architecture](https://gregfyoung.wordpress.com/2012/09/09/cqrs-is-not-an-architecture/), Greg Young, and [Martin Fowler's CQRS entry](https://martinfowler.com/bliki/CQRS.html).
+- [What do you mean by "Event-Driven"?](https://martinfowler.com/articles/201701-event-driven.html), Martin Fowler. Separates event notification, event-carried state transfer, event sourcing and CQRS. Same argument as this article, made in 2017, and better.
+- [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html), Martin Fowler, 2005. The original write-up of the pattern.
+- [Anyone using Axon or CQRS/event sourcing in real life?](https://www.reddit.com/r/java/comments/6znmfi/anyone_using_axon_or_cqrs_event_sourcing_in_real/) Reddit thread with a comment from an Axon maintainer, quoted in the reality check chapter.
+- [Asynchronous Request-Reply](https://learn.microsoft.com/en-us/azure/architecture/patterns/asynchronous-request-reply), Azure Architecture Center.
+- [Transactional outbox](https://microservices.io/patterns/data/transactional-outbox.html), Chris Richardson. More context on that pattern.
+- [A Spring Boot outbox implementation](https://github.com/ChintaHari/springboot-transactional-outbox-pattern), if you want to experiment with a working code example.
+- [Event-driven architecture style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven), Azure Architecture Center.
+- The header image is [Webb Opens Treasure Chest](https://www.nasa.gov/image-article/webb-opens-treasure-chest/), from NASA.
