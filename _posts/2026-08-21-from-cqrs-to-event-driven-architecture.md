@@ -29,6 +29,8 @@ To compare them fairly, every step gets pointed at the same example: an **order 
 
 For every step I'll ask the same two things: what it fixes on that example, and what it charges in exchange. Plus a third one that mattered more to me at the time, which is whether it gets us any closer to fixing that endpoint.
 
+---
+
 ## Step zero: The architecture we all know (and why it's fine)
 
 It's worth being precise about what we're comparing against, because it's easy to turn it into an easy target, and it doesn't deserve that. The classic layered application has four properties, and they travel together:
@@ -54,6 +56,8 @@ But there are cracks, and each one is the reason for one of the five steps:
 
 Cracks one and three are the interesting ones, and they lead to different places. That's where the rest of this goes.
 
+---
+
 ## Step one: CQRS is much smaller than you think
 
 Let's start with the definition, because the name is far heavier than the idea. CQRS stands for Command Query Responsibility Segregation. **Commands** are write operations, **queries** are read operations, and the claim is simply that the two don't have to share a model. One code path handles writes, shaped around the business rules it has to enforce. Another handles reads, shaped around the questions the UI actually asks. They can share a database, even a schema. They just stop sharing a *model*.
@@ -70,6 +74,8 @@ This alone addresses crack #1. Your write model can be a rich domain object with
 Worth saying once, since it confused me for weeks: CQRS and event sourcing are two separate patterns, and the dependency runs one way only. Event sourcing effectively forces CQRS on you, for reasons we'll get to. CQRS needs nothing from event sourcing at all. Greg Young, who coined the term, has been repeating this for years, in a post titled [*CQRS is not an Architecture*](https://gregfyoung.wordpress.com/2012/09/09/cqrs-is-not-an-architecture/). Almost every article presents them as one package, and I read them that way, which is why the cheap idea looked to me like it carried the expensive idea's price tag.
 
 If you take one thing from this article, take this one. You can have this step right now, in any codebase, at nearly zero cost, and it is not what people mean when they warn you that CQRS is overengineering. That warning is about the next step.
+
+---
 
 ## Step two: event sourcing, and the state you never stored
 
@@ -123,7 +129,7 @@ And that is CQRS, reached by necessity rather than by choice. Once your source o
 
 What you buy with all that machinery is crack number three, closed completely. You can rebuild any state at any time, which means "what did this look like on the 3rd of March?" stops being a research project. My favourite consequence is the debugging one: a user hits a bug that only shows up after a specific sequence of operations, and instead of guessing, you replay their exact stream into a test environment and watch it happen in front of you.
 
-## The reality check
+### The reality check
 
 At this point I had a decent map and no idea whether anyone actually lived there. So I went looking for people who had actually built these systems, rather than people explaining them, and the picture is clearly divided.
 
@@ -136,6 +142,8 @@ So the thing that decides isn't throughput, it's whether the *domain* really is 
 My take, after all that reading: full event sourcing across a whole domain is right for a narrow slice of systems, and for most applications adopting it wholesale costs more than it gives back.
 
 The *ideas* underneath were still right, though, even where the full pattern was wrong. Separate the intent from the execution, write down what the user asked for before you do it, treat a request as a durable fact instead of an open connection. All of that seemed valuable at a much smaller scale, in one endpoint or one module. Which left me with a question I felt slightly stupid asking: does the small version have a name, or was I just describing a queue with extra steps?
+
+---
 
 ## Step three, Asynchronous Request-Reply: the same idea, one endpoint wide
 
@@ -178,6 +186,8 @@ And almost by accident you end up with an audit trail of intent. That stored com
 And now the cost, because this step is cheap but not free. Your client needs somewhere to collect the result, which means polling endpoints or webhook delivery, infrastructure you didn't have before. And the awkward one: business errors now surface *after* you've answered `202`. You can no longer tell the user "your card was declined" in the response to their own request. That has to travel back through a notification, an email, or a status endpoint, and designing that path properly is usually more work than the worker loop itself. Anything the user must know immediately has to stay in the synchronous validation step, which puts real pressure on where you draw that line.
 
 Still, this is the shape I wanted from the start, and the one my colleague had been describing all along: intent separated from execution, at exactly one boundary, with no framework and no event store behind it. One table and a loop.
+
+---
 
 ## Step four: the dual write, and the Transactional Outbox
 
@@ -224,6 +234,8 @@ It's basically step three, asynchronous request-reply, **implemented with events
 
 That's the shape behind this article, really. The command table in step three, the outbox table in step four and the event store in step two are the same idea sold at three different prices: write down the fact first, and let the consequences happen afterwards.
 
+---
+
 ## Step five: zoom out, and it's Event-Driven Architecture
 
 The last step doesn't need any new machinery, only a change of scope.
@@ -244,6 +256,8 @@ That's **Event-Driven Architecture**, and it's just the outbox pattern with a wi
 That also changes what the outbox is for. It's tempting to file it under reliability tricks, but it's the safety mechanism that lets you adopt EDA without losing data. Without it, every service publishing to the shared broker has an unguarded dual write, and your beautifully decoupled architecture is silently losing messages at every node.
 
 I should be as honest about this step as the others, because "global decoupling" makes it sound free, and it isn't. You give up global ordering, so events about the same entity can reach a consumer out of sequence. You inherit at-least-once delivery organisation-wide, so every consumer needs the idempotency we keep coming back to. Debugging stops being a stack trace and becomes a correlation ID chased across five services' logs. And the subtle one, which took me a while to appreciate: your event schema becomes public API. A REST endpoint has known callers you can go and talk to. A Kafka topic has consumers you've never met, in teams you don't know, and changing that event's shape is a negotiation across the whole company. The coupling didn't disappear, it moved into the payload, where it's harder to see.
+
+---
 
 ## What I actually took away
 
