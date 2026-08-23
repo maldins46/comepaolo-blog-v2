@@ -1,24 +1,24 @@
-flowchart LR
+flowchart TB
   APP["<b>Application</b><br/><i>handling a command</i>"]
 
-  subgraph TX["<b>ONE database transaction</b>: both writes, or neither"]
+  subgraph TX["<b>ONE database transaction</b><br/>both writes, or neither"]
     direction TB
     T1[("ORDERS<br/><i>business state</i>")]
     T2[("OUTBOX<br/><i>the message</i>")]
   end
 
+  X["<b>dies between 1 and 2?</b><br/>the row is published again"]
   REL["<b>Relay</b><br/><i>@Scheduled poller,<br/>or LISTEN/NOTIFY</i>"]
   BR{{"<b>Message broker</b>"}}
   CON["<b>Consumer</b><br/><i>must be idempotent</i>"]
-  X["<b>dies between 1 and 2?</b><br/>the row is published again"]
 
   APP --> T1
   APP --> T2
+  T2 ~~~ X
   T2 -->|reads unpublished rows| REL
   REL -->|1. publish| BR
   REL -.->|2. mark as published| T2
   BR -->|at least once| CON
-  X -.- REL
 
   classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:2px
   classDef comp fill:#eef0fb,stroke:#5b5ea6,stroke-width:2px
