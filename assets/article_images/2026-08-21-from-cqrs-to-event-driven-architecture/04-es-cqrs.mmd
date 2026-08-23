@@ -1,10 +1,10 @@
 flowchart LR
   C["<b>Client</b>"]
-  CS["<b>IncidentCommandService</b><br/><i>write side</i>"]
+  CS["<b>OrderCommandService</b><br/><i>write side</i>"]
   ES[("<b>Event store</b><br/><i>append only</i>")]
   SN[("Snapshots<br/><i>every N events</i>")]
   H["<b>Projection handler</b><br/><i>replays the stream</i>"]
-  QS["<b>IncidentQueryService</b><br/><i>read side</i>"]
+  QS["<b>OrderQueryService</b><br/><i>read side</i>"]
 
   subgraph RM["read models, shaped like the questions"]
     direction TB

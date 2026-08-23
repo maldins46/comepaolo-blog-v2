@@ -20,12 +20,12 @@ So take my hand, and let's walk through that investigation together. What I want
 These are the five ideas we'll go through:
 
 1. **CQRS.** Split reads and writes into separate code paths. Cheap. Requires no events at all.
-2. **Event sourcing.** Store facts instead of state. Expensive. Effectively forces CQRS on you.
-3. **Asynchronous request-reply.** Accept the request, return `202`, execute later.
-4. **Transactional outbox + Listen To Yourself.** One transaction for your state and your message, so neither can go missing.
-5. **Event-driven architecture.** Publish the fact, let the rest of the company consume it.
+2. **Event Sourcing.** Store facts instead of state. Expensive. Effectively forces CQRS on you.
+3. **Asynchronous Request-Reply.** Accept the request, return `202`, execute later.
+4. **Transactional Outbox + Listen To Yourself.** One transaction for your state and your message, so neither can go missing.
+5. **Event-Driven Architecture.** Publish the fact, let the rest of the company consume it.
 
-To compare them fairly, we'll often refer to the same example: an **incident management system**, borrowed from [Michael Ploed's SpringOne2GX talk](https://www.youtube.com/watch?v=A0goyZ9F4bg), the clearest walkthrough of this material I found while reading. Somebody reports that the printer on floor two is on fire, the report gets an ID and a description, a colleague corrects that description with the details that were missing, somebody takes the incident, somebody resolves it. A small domain, familiar to anybody who has worked in a team with an on-call rotation, and with one property that becomes important later: what happened, and in which order, matters as much as the state the incident is in right now.
+To compare them fairly, every step gets pointed at the same example: an **order management system**, the boring back end of any online shop. A customer places an order, changes the delivery address ten minutes later, pays, and eventually the thing ships. A small domain, familiar to everybody, and with one property that becomes important later.
 
 For every step I'll ask the same two things: what it fixes on that example, and what it charges in exchange. Plus a third one that mattered more to me at the time, which is whether it gets us any closer to fixing that endpoint.
 
@@ -34,13 +34,13 @@ For every step I'll ask the same two things: what it fixes on that example, and 
 It's worth being precise about what we're comparing against, because it's easy to turn it into an easy target, and it doesn't deserve that. The classic layered application has four properties, and they travel together:
 
 - Reads and writes go through the **same stack**: same endpoint, same service, same DAO.
-- They use the **same model**. One `Incident` class that is the business model, the persistence model, and (with a DTO or two of polish) the thing you send over the wire.
+- They use the **same model**. One `Order` class that is the business model, the persistence model, and (with a DTO or two of polish) the thing you send over the wire.
 - It's **one deployment unit**, usually against **one data store**.
 - Writes **mutate state in place**. You update a row, the old value is gone.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/01-layered.png" alt="The classic layered stack: client, endpoint, business service, DAO and database, each layer holding its own shape of the same Incident">
-  <figcaption>One path, and the same Incident re-shaped four times along it</figcaption>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/01-layered.png" alt="The classic layered stack: client, endpoint, business service, DAO and database, each layer holding its own shape of the same Order">
+  <figcaption>One path, and the same Order re-shaped four times along it</figcaption>
 </figure>
 
 This works. I want to say it clearly, because everything after this section is about alternatives and it would be easy to read the whole thing as a condemnation. Plenty of applications run on exactly this for years, and the people maintaining them sleep fine.
@@ -61,11 +61,11 @@ Let's start with the definition, because the name is far heavier than the idea. 
 That's all of it. A couple of objects inside one component, no broker, no event store anywhere in sight.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/02-cqrs.png" alt="Plain CQRS: a command service with a rich write model and a query service with a flat read model, both against the same database">
+  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/02-cqrs.png" alt="Plain CQRS: an order command service with a rich write model and an order query service with a flat read model, both against the same database">
   <figcaption>The split is in the code, not in the infrastructure</figcaption>
 </figure>
 
-This alone addresses crack #1. Your write model can be a rich domain object with all its rules, your read model can be a flat denormalised thing that answers "all open incidents assigned to Marco, sorted by priority" in one query, and neither compromises for the other. No broker, no event store, no eventual consistency, no new operational work.
+This alone addresses crack #1. Your write model can be a rich domain object with all its rules, your read model can be a flat denormalised thing that answers "every unshipped order from this week, most valuable first" in one query, and neither compromises for the other. No broker, no event store, no eventual consistency, no new operational work.
 
 Worth saying once, since it confused me for weeks: CQRS and event sourcing are two separate patterns, and the dependency runs one way only. Event sourcing effectively forces CQRS on you, for reasons we'll get to. CQRS needs nothing from event sourcing at all. Greg Young, who coined the term, has been repeating this for years, in a post titled [*CQRS is not an Architecture*](https://gregfyoung.wordpress.com/2012/09/09/cqrs-is-not-an-architecture/). Almost every article presents them as one package, and I read them that way, which is why the cheap idea looked to me like it carried the expensive idea's price tag.
 
@@ -75,7 +75,7 @@ If you take one thing from this article, take this one. You can have this step r
 
 Event sourcing answers a different question altogether: *what do we store?*
 
-**Event sourcing** determines application state from a sequence of events. Not rows holding current values, but the ordered list of everything that ever happened. Instead of a row that says `balance = 100`, you store `Deposited(+50)`, `Deposited(+100)`, `Withdrawn(-50)`. Current state isn't stored at all: you get it by replaying the list.
+**Event sourcing** determines application state from a sequence of events. Not rows holding current values, but the ordered list of everything that ever happened. Instead of a row that says `status = SHIPPED`, you store `OrderPlaced`, then `DeliveryAddressChanged`, then `OrderShipped`. Current state isn't stored at all: you get it by replaying the list.
 
 My first reaction was suspicion, and I don't think that's unusual. But then you start noticing how many domains are *already* shaped like this. A package moving through a logistics network is a sequence of events. A version control repository is a sequence of commits, and `git` reconstructs your working tree by replaying them. Your relational database's own write-ahead log works on the same principle, quietly, underneath the very system you were about to call "the normal way".
 
@@ -86,22 +86,22 @@ Two rules come with that definition. An event is something that **happened**, ne
 There aren't many moving parts: the **application** produces events, an **event queue** carries them (in practice a message broker), **event handlers** react to them, and the **event store** keeps them durably, forever. The ordered sequence flowing through all of it is the **event stream**.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/03-event-sourcing.png" alt="Event sourcing building blocks: the application, an event queue carrying the incident events, event handlers, and the append-only event store">
+  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/03-event-sourcing.png" alt="Event sourcing building blocks: the application, an event queue carrying the order events, event handlers, and the append-only event store">
   <figcaption>The application appends facts, handlers react, the store keeps everything forever</figcaption>
 </figure>
 
 ### A worked example
 
-Back to the incident example now. A user submits an incident, someone corrects its description, someone resolves it.
+Back to the order example now. A customer places an order, then changes the delivery address, then the order ships.
 
 In the classic architecture, that's an `INSERT` and two `UPDATE`s, leaving one row in its final state. The description the user *originally* wrote is gone. When it changed, and to what, is gone.
 
 In an event-sourced system, that's three events, appended:
 
 ```
-IncidentReported(id=42, text="printer on fire", reportedBy=riccardo)
-IncidentTextChanged(id=42, text="printer on fire, floor 2, smoke visible")
-IncidentResolved(id=42, resolvedBy=marco, resolution="replaced fuser unit")
+OrderPlaced(id=42, customer=riccardo, items=[...], total=89.90)
+DeliveryAddressChanged(id=42, address="via Roma 12, Jesi")
+OrderShipped(id=42, carrier="BRT", tracking="0042ABC")
 ```
 
 Nothing was overwritten. Current state is what you get by replaying those three in order, and so is the state *as of yesterday*, if you replay only the events up to yesterday.
@@ -110,14 +110,14 @@ Nothing was overwritten. Current state is what you get by replaying those three 
 
 Storing facts instead of state raises an obvious question. How do you query any of this?
 
-It's often said that event stores have terrible query performance, and that's not quite right. An event store is excellent at the one question it exists to answer: give me every event for aggregate 42, in order. That's an indexed range scan, and it's fast. What it cannot do is answer *your* question. "All open incidents assigned to Marco, sorted by priority" spans thousands of streams, and no index makes replaying all of them viable.
+It's often said that event stores have terrible query performance, and that's not quite right. An event store is excellent at the one question it exists to answer: give me every event for aggregate 42, in order. That's an indexed range scan, and it's fast. What it cannot do is answer *your* question. "Every unshipped order from this week, most valuable first" spans thousands of streams, and no index makes replaying all of them viable.
 
 So you build the answer in advance. An event handler subscribes to the stream and **projects** it into a read model shaped like the question, and if you can build one projection you can build several: one for the dashboard, one for the search box, another one holding last week's state if somebody asks for it. The application queries those, never the raw log.
 
 And that is CQRS, reached by necessity rather than by choice. Once your source of truth is an event stream, a separate read model isn't an option you evaluate, it's the only way to serve a query at all. This is why the two are almost always taught as one thing: the expensive pattern cannot work without the cheap one, so anybody explaining event sourcing has to explain CQRS on the way. What gets lost is that the reverse isn't true.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/04-es-cqrs.png" alt="Event-sourced CQRS: the command service appends to the event store, snapshots are taken every N events, an event handler projects the stream into read models, and the query service reads those">
+  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/04-es-cqrs.png" alt="Event-sourced CQRS: the order command service appends to the event store, snapshots are taken every N events, an event handler projects the stream into read models, and the order query service reads those">
   <figcaption>The same split as before, with considerably more machinery</figcaption>
 </figure>
 
@@ -259,4 +259,4 @@ I never did end up needing an event store. What I needed was a table with a `sta
 
 ---
 
-*Michael Ploed's [SpringOne2GX 2015 talk on CQRS and Event Sourcing](https://www.youtube.com/watch?v=A0goyZ9F4bg) is the clearest single walkthrough of the event-sourced end of this story, and the source of the incident management example. For the case that CQRS is a much smaller thing than its reputation suggests, see Greg Young's [CQRS is not an Architecture](https://gregfyoung.wordpress.com/2012/09/09/cqrs-is-not-an-architecture/) and [Martin Fowler's bliki entry](https://martinfowler.com/bliki/CQRS.html). For a concrete outbox implementation in Spring Boot, [this repository](https://github.com/ChintaHari/springboot-transactional-outbox-pattern) is a good starting point.*
+*Michael Ploed's [SpringOne2GX 2015 talk on CQRS and Event Sourcing](https://www.youtube.com/watch?v=A0goyZ9F4bg) is the clearest single walkthrough of the event-sourced end of this story, and the source of the structure I followed here. For the case that CQRS is a much smaller thing than its reputation suggests, see Greg Young's [CQRS is not an Architecture](https://gregfyoung.wordpress.com/2012/09/09/cqrs-is-not-an-architecture/) and [Martin Fowler's bliki entry](https://martinfowler.com/bliki/CQRS.html). For a concrete outbox implementation in Spring Boot, [this repository](https://github.com/ChintaHari/springboot-transactional-outbox-pattern) is a good starting point.*

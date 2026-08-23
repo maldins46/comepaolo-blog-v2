@@ -1,7 +1,7 @@
 flowchart LR
   C["Client"]
-  C -->|writes| CS["IncidentCommandService"]
-  C -->|reads| QS["IncidentQueryService"]
+  C -->|writes| CS["OrderCommandService"]
+  C -->|reads| QS["OrderQueryService"]
   CS --> WM["Write model<br/>rich, enforces the rules"]
   QS --> RM["Read model<br/>flat, answers the question"]
   WM --> DB[("Same database<br/>is perfectly fine")]

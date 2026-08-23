@@ -3,13 +3,13 @@ flowchart LR
 
   subgraph Q["<b>Event queue</b>, in practice a broker"]
     direction LR
-    E1["IncidentReported"] --> E2["IncidentTextChanged"] --> E3["IncidentResolved"]
+    E1["OrderPlaced"] --> E2["DeliveryAddressChanged"] --> E3["OrderShipped"]
   end
 
   APP --> Q
   Q ==>|kept forever| ES[("<b>Event store</b><br/><i>append only</i>")]
-  Q -->|reacts| H1["<b>Notification handler</b><br/><i>emails the on-call engineer</i>"]
-  Q -->|reacts| H2["<b>Projection handler</b><br/><i>updates the incidents dashboard</i>"]
+  Q -->|reacts| H1["<b>Notification handler</b><br/><i>emails the customer</i>"]
+  Q -->|reacts| H2["<b>Projection handler</b><br/><i>updates the orders dashboard</i>"]
 
   classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:3px
   classDef ev fill:#fdf6e3,stroke:#b58900,stroke-width:2px

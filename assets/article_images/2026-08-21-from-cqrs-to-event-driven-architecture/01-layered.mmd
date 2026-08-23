@@ -1,8 +1,8 @@
 flowchart LR
-  C["<b>Client</b><br/><i>shows</i><br/>Incident View Model"]
-  E["<b>IncidentEndpoint</b><br/><i>speaks</i><br/>Incident DTO"]
-  S["<b>IncidentBusinessService</b><br/><i>works on</i><br/>Incident Business Model"]
-  D["<b>IncidentDAO</b><br/><i>persists</i><br/>Incident ER Model"]
+  C["<b>Client</b><br/><i>shows</i><br/>Order View Model"]
+  E["<b>OrderEndpoint</b><br/><i>speaks</i><br/>Order DTO"]
+  S["<b>OrderBusinessService</b><br/><i>works on</i><br/>Order Business Model"]
+  D["<b>OrderDAO</b><br/><i>persists</i><br/>Order ER Model"]
   DB[("<b>RDBMS</b>")]
 
   C --> E --> S --> D --> DB
