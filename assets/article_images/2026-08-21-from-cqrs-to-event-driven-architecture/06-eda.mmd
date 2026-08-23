@@ -1,24 +1,32 @@
 flowchart LR
-  subgraph OS["Order Service"]
+  subgraph OS["<b>Order Service</b>, your service"]
     direction TB
     ODB[("orders + outbox")]
     REL["Relay"]
     ODB --> REL
   end
 
-  REL --> K{{"Kafka topic<br/>OrderPlaced"}}
+  K{{"<b>Kafka topic: OrderPlaced</b><br/><i>the schema is now public API</i>"}}
 
-  K --> B["Billing"]
-  K --> I["Inventory"]
-  K --> S["Shipping"]
-  K --> A["Analytics"]
+  B["<b>Billing</b><br/><i>issues the invoice</i>"]
+  I["<b>Inventory</b><br/><i>decrements stock</i>"]
+  S["<b>Shipping</b><br/><i>creates the label</i>"]
+  A["<b>Analytics</b><br/><i>consumes everything</i>"]
+  N["<b>whatever ships next quarter</b><br/><i>you change nothing</i>"]
 
-  B --> BDB[("own DB")]
-  I --> IDB[("own DB")]
-  S --> SDB[("own DB")]
-  A --> ADB[("own DB")]
+  REL -->|at least once| K
+  K --> B
+  K --> I
+  K --> S
+  K --> A
+  K -.-> N
 
   classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:2px
-  classDef svc fill:#e8f7ec,stroke:#2d6a4f
-  class ODB,BDB,IDB,SDB,ADB store
+  classDef svc fill:#e8f7ec,stroke:#2d6a4f,stroke-width:2px
+  classDef comp fill:#eef0fb,stroke:#5b5ea6,stroke-width:2px
+  classDef ghost fill:#ffffff,stroke:#999,stroke-width:1px,color:#666,stroke-dasharray: 5 4
+  class ODB store
+  class REL comp
   class B,I,S,A svc
+  class N ghost
+  style OS fill:#eef0fb,stroke:#5b5ea6,stroke-width:2px
