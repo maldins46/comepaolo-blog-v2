@@ -11,6 +11,9 @@
 .article-hero-bg {
   position: absolute;
   inset: 0;
+  // Opaque placeholder so nothing behind the hero (e.g. the fixed TOC)
+  // shows through the semi-transparent overlay before the image loads.
+  background-color: #1a1918;
   background-size: cover;
   background-position: center;
   filter: blur(0px);
@@ -151,6 +154,7 @@
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 40px 24px 80px;
+  scroll-margin-top: 80px;
 
   p {
     font-size: 17px;
@@ -163,6 +167,7 @@
     font-weight: 600;
     letter-spacing: -0.02em;
     margin: 48px 0 16px;
+    scroll-margin-top: 80px;
   }
 
   hr {
@@ -297,4 +302,90 @@
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 16px;
+}
+
+.article-toc {
+  display: none;
+}
+
+// Align the reading column to the nav logo, and the TOC to the theme
+// toggle, by reusing --max-width-wide (the nav's own box) with a wider
+// right padding on the content instead of var(--max-width) centering.
+@media (min-width: 1024px) {
+  .article-header.has-toc,
+  .article-hero-content.has-toc,
+  .article-content.has-toc {
+    max-width: var(--max-width-wide);
+    margin: 0 auto;
+    padding-right: 256px;
+  }
+
+  .article-toc {
+    display: block;
+    position: fixed;
+    top: 96px;
+    right: calc(50% - 456px);
+    width: 200px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    // Faded out until the header scrolls out of view (toggled via JS)
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+
+    &.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}
+
+.toc-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  margin-bottom: 12px;
+
+  .dot {
+    width: 3px;
+    height: 3px;
+    background: var(--divider-dot);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}
+
+.toc-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 1px solid var(--border);
+}
+
+.toc-link {
+  display: block;
+  padding: 6px 0 6px 14px;
+  margin-left: -1px;
+  border-left: 1px solid transparent;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  transition: color 0.2s, border-color 0.2s;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+
+  &.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    font-weight: 500;
+  }
 }

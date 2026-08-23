@@ -2,11 +2,21 @@
 layout: default
 ---
 
+{% assign h2_parts = content | split: "<h2 " %}
+{% assign h2_count = h2_parts.size | minus: 1 %}
+{% assign intro_text = h2_parts[0] | strip_html | strip %}
+{% assign has_intro = false %}
+{% if intro_text != "" %}{% assign has_intro = true %}{% endif %}
+{% assign toc_item_count = h2_count %}
+{% if has_intro %}{% assign toc_item_count = toc_item_count | plus: 1 %}{% endif %}
+{% assign has_toc = false %}
+{% if toc_item_count > 1 %}{% assign has_toc = true %}{% endif %}
+
 {% if page.image %}
-<div class="article-hero">
+<div class="article-hero" id="articleHeader">
   <div class="article-hero-bg" style="background-image: url('{{ page.image }}')"></div>
   <div class="article-hero-overlay"></div>
-  <div class="article-hero-content">
+  <div class="article-hero-content{% if has_toc %} has-toc{% endif %}">
     <div class="article-hero-text">
       <h1>{{ page.title }}</h1>
       <div class="article-meta-bar">
@@ -27,7 +37,7 @@ layout: default
   </div>
 </div>
 {% else %}
-<div class="article-header">
+<div class="article-header{% if has_toc %} has-toc{% endif %}" id="articleHeader">
   <a class="article-back" href="{{ site.baseurl }}/">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
     Back to blog
@@ -50,6 +60,7 @@ layout: default
 </div>
 {% endif %}
 
-<div class="article-content">
+{% include toc.html html=content %}
+<div class="article-content{% if has_toc %} has-toc{% endif %}" id="articleContent">
   {{ content }}
 </div>

@@ -81,6 +81,58 @@
   });
 })();
 
+// Article TOC: reveal it once the header has scrolled out of view
+(function () {
+  var toc = document.getElementById('articleToc');
+  var header = document.getElementById('articleHeader');
+  if (!toc || !header || !window.IntersectionObserver) return;
+
+  var observer = new IntersectionObserver(function (entries) {
+    toc.classList.toggle('visible', !entries[0].isIntersecting);
+  }, { rootMargin: '-56px 0px 0px 0px' }); // account for the sticky nav
+
+  observer.observe(header);
+})();
+
+// Article TOC: highlight active section while scrolling
+(function () {
+  var toc = document.getElementById('articleToc');
+  if (!toc) return;
+  var links = toc.querySelectorAll('.toc-link');
+  var headings = Array.prototype.map.call(links, function (link) {
+    return document.getElementById(link.getAttribute('data-toc-target'));
+  }).filter(Boolean);
+  if (!headings.length) return;
+
+  var offset = 120; // px from viewport top counted as the "current section" line
+
+  function updateActive() {
+    var current = headings[0];
+    for (var i = 0; i < headings.length; i++) {
+      if (headings[i].getBoundingClientRect().top - offset <= 0) {
+        current = headings[i];
+      } else {
+        break;
+      }
+    }
+    var link = toc.querySelector('.toc-link[data-toc-target="' + current.id + '"]');
+    links.forEach(function (l) { l.classList.remove('active'); });
+    if (link) link.classList.add('active');
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      updateActive();
+      ticking = false;
+    });
+  }, { passive: true });
+
+  updateActive();
+})();
+
 // Delegated navigation for [data-href] wrappers (post/featured items)
 document.addEventListener('click', function (e) {
   var item = e.target.closest('[data-href]');

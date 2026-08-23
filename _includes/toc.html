@@ -1,0 +1,29 @@
+{% assign h2_parts = include.html | split: "<h2 " %}
+{% assign heading_count = h2_parts.size | minus: 1 %}
+{% assign intro_text = h2_parts[0] | strip_html | strip %}
+{% assign has_intro = false %}
+{% if intro_text != "" %}{% assign has_intro = true %}{% endif %}
+{% assign item_count = heading_count %}
+{% if has_intro %}{% assign item_count = item_count | plus: 1 %}{% endif %}
+{% assign toc_words = include.html | number_of_words %}
+{% if item_count > 1 %}
+<aside class="article-toc" id="articleToc">
+  <div class="toc-inner">
+    <div class="toc-label">On this page <span class="dot"></span> {% if toc_words < 200 %}1{% else %}{{ toc_words | divided_by: 200 }}{% endif %} min read</div>
+    <nav class="toc-nav">
+      <ul>
+        {% if has_intro %}
+        <li><a href="#articleContent" class="toc-link" data-toc-target="articleContent">Introduction</a></li>
+        {% endif %}
+        {% for part in h2_parts offset: 1 %}
+          {% assign seg = part | split: '">' %}
+          {% assign slug = seg[0] | remove_first: 'id="' %}
+          {% assign title_html = seg[1] | split: '</h2>' | first %}
+          {% assign title = title_html | strip_html | strip %}
+          <li><a href="#{{ slug }}" class="toc-link" data-toc-target="{{ slug }}">{{ title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</aside>
+{% endif %}
