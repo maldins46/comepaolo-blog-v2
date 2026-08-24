@@ -178,7 +178,7 @@ And almost by accident **you end up with an audit trail of intent**. That stored
 
 And now the cost, because this step is cheap but not free. Your client needs somewhere to collect the result, which means polling endpoints or webhook delivery, infrastructure you didn't have before. And the awkward one: business errors now surface *after* you've answered `202`. You can no longer tell the user "your card was declined" in the response to their own request. That has to travel back through a notification, an email, or a status endpoint, and designing that path properly is usually more work than the worker loop itself. Anything the user must know immediately has to stay in the synchronous validation step, which puts real pressure on where you draw that line.
 
-Still, this is the shape I wanted from the start, and the one my colleague had been describing all along: intent separated from execution, at exactly one boundary, with no framework and no event store behind it. **One table and a loop**. The article could also here, but as we are engineers, we noticed that something else can be improved ere. Let's do deeper into the rabbit hole.
+Still, this is the shape I was searching from the start, and the one my colleague had been describing all along: intent separated from execution, at exactly one boundary, with no framework and no event store behind it. **One table and a loop**. The article could also stop here, but since we are engineers, we noticed that something else can be improved here. Let's get deeper into the rabbit hole.
 
 ---
 
@@ -267,12 +267,13 @@ What I concretely take away is to use these ideas *surgically*. Weigh the cost e
 ## Sources
 
 - [CQRS and Event Sourcing](https://www.youtube.com/watch?v=A0goyZ9F4bg), Michael Ploed at SpringOne2GX 2015. The walkthrough I followed for steps one and two.
-- [CQRS is not an Architecture](https://gregfyoung.wordpress.com/2012/09/09/cqrs-is-not-an-architecture/), Greg Young, and [Martin Fowler's CQRS entry](https://martinfowler.com/bliki/CQRS.html).
-- [What do you mean by "Event-Driven"?](https://martinfowler.com/articles/201701-event-driven.html), Martin Fowler. Separates event notification, event-carried state transfer, event sourcing and CQRS. Same argument as this article, made in 2017, and better.
+- [CQRS is not an Architecture](https://gregfyoung.wordpress.com/2012/09/09/cqrs-is-not-an-architecture), Greg Young, 2012.
+- [CQRS](https://martinfowler.com/bliki/CQRS.html), Martin Fowler, 2011.
+- [What do you mean by "Event-Driven"?](https://martinfowler.com/articles/201701-event-driven.html), Martin Fowler, 2017.
 - [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html), Martin Fowler, 2005. The original write-up of the pattern.
-- [Anyone using Axon or CQRS/event sourcing in real life?](https://www.reddit.com/r/java/comments/6znmfi/anyone_using_axon_or_cqrs_event_sourcing_in_real/) Reddit thread with a comment from an Axon maintainer, quoted in the reality check chapter.
-- [Asynchronous Request-Reply](https://learn.microsoft.com/en-us/azure/architecture/patterns/asynchronous-request-reply), Azure Architecture Center.
-- [Transactional outbox](https://microservices.io/patterns/data/transactional-outbox.html), Chris Richardson. More context on that pattern.
+- [Anyone using Axon or CQRS/event sourcing in real life?](https://www.reddit.com/r/java/comments/6znmfi/anyone_using_axon_or_cqrs_event_sourcing_in_real) Reddit thread with a comment from an Axon maintainer, quoted in the reality check chapter, 2017.
+- [Asynchronous Request-Reply](https://learn.microsoft.com/en-us/azure/architecture/patterns/asynchronous-request-reply), Azure Architecture Center, 2026.
+- [Transactional Outbox](https://microservices.io/patterns/data/transactional-outbox.html), Chris Richardson, 2019.
+- [Event-driven architecture style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven), Azure Architecture Center, 2026.
 - [A Spring Boot outbox implementation](https://github.com/ChintaHari/springboot-transactional-outbox-pattern), if you want to experiment with a working code example.
-- [Event-driven architecture style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven), Azure Architecture Center.
-- The header image is [Webb Opens Treasure Chest](https://www.nasa.gov/image-article/webb-opens-treasure-chest/), from NASA.
+- The header image is [Webb Opens Treasure Chest](https://www.nasa.gov/image-article/webb-opens-treasure-chest), from NASA.
