@@ -254,15 +254,15 @@ On the other side, keep in mind that even with that "globally decoupled" applica
 
 I set out to fill in a missing piece, and ended up tracing, accidentally and roughly backwards, the path the industry took to arrive at event-driven architecture. Five steps: CQRS, event sourcing, asynchronous request-reply, the transactional outbox, EDA. What a journey!
 
-In hindsight, first thing first I can now challenge my former colleague and my manager on these suggestion.
+In hindsight, the first thing I can do is go back to those two suggestions and finally answer them.
 
-To my manager, it's now clear to me what he meant: he pointed out to Event Sourcing, as a good candidate for that system, in order to properly audit changes in the entity. Well on that specific use case, I still think that in hindsight, Event Sourcing wouldn't have been a proper fit. Even if bringing the auditing feature, that domain were quite complex, and in particular complex to being modeled as a list of events.
+To my manager: it's clear now what he meant. He was pointing at event sourcing as a way to get proper auditing of every change to the entity, for free. On that specific system, though, I still don't think it would have been the right fit. The audit trail would have been a real gain, but that domain was complex, and complex in the way that resists being modelled as a list of events.
 
-To my colleague, it's now clear to me that he was pointing to handling these API calls with the Async Request-Response pattern, or any variation of that. In this case, I partially agee with him. The suggestion from him was in fact a general one, so move the whole arthitecture on that direction. I don't agree since in this way we are just moving the complexity. Just literally, phisically moving the same code in another point, but it's still there, while servine requests with 202 while could still eventually fail.
+To my colleague: it's clear now that he was pointing at asynchronous request-reply, or some variation of it. Here I partly agree. His suggestion was a general one, move the whole architecture in that direction, and that part I don't buy: it doesn't remove the complexity, it relocates it. The same code lives somewhere else, and the request that used to fail with a `500` now gets a `202` and fails later, out of sight.
 
-I said that I partially *agree* though, since they actuelly were few contexts where a system like that makes a lot of sense, and we implemented without knowing exactly that pattern. Customer required a system where he could submit a large amount of requests all together, each one potentially employing a lot of time, and for which it was acceptable to treat them asychronously. That was the perfect case, and we actually end up with a system following exactly that pattern. 
+I said *partly*, though, because there were a few contexts where a system like that made a lot of sense, and we built one without knowing the pattern had a name. The customer needed to submit a large batch of requests at once, each one potentially slow, and was fine with them being handled asynchronously. Perfect fit, and we ended up with asynchronous request-reply by accident.
 
-What I concretely take away here is to use those ideas *surgically*. Always eveluate pros and cons, and it's always good to know one pattern more than the last time. And these days, when somebody drops "we could use events here" into a brainstorming session, I at least know which of the five things they're pointing at.
+What I concretely take away is to use these ideas *surgically*. Weigh the cost every time, and be happy to know one pattern more than you did last time. And these days, when somebody drops "we could use events here" into a brainstorming session, I at least know now which of the five things they're pointing at.
 
 ## Sources
 
