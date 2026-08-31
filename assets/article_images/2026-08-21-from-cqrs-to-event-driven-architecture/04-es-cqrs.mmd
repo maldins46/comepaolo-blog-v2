@@ -1,8 +1,8 @@
 flowchart TB
   C["<b>Client</b>"]
   CS["<b>OrderCommandService</b><br/><i>write side</i>"]
+  Q{{"<b>Event queue</b><br/><i>in practice a broker</i>"}}
   ES[("<b>Event store</b><br/><i>append only</i>")]
-  SN[("Snapshots<br/><i>every N events</i>")]
   H["<b>Projection handler</b><br/><i>replays the stream</i>"]
   QS["<b>OrderQueryService</b><br/><i>read side</i>"]
 
@@ -14,9 +14,9 @@ flowchart TB
   end
 
   C -->|commands| CS
-  CS -->|appends| ES
-  ES -.->|shortcut for replay| SN
-  ES ==>|subscribes| H
+  CS -->|publishes| Q
+  Q ==>|kept forever| ES
+  Q -->|reacts| H
   H -->|async, the lag lives here| RM
   C -->|queries| QS
   QS -->|reads| RM
@@ -26,9 +26,11 @@ flowchart TB
   classDef write fill:#fde8e8,stroke:#a33,stroke-width:2px
   classDef read fill:#e8f7ec,stroke:#2d6a4f,stroke-width:2px
   classDef comp fill:#eef0fb,stroke:#5b5ea6,stroke-width:2px
+  classDef queue fill:#fdf6e3,stroke:#b58900,stroke-width:2px
   class ES main
-  class SN,R1,R2,R3 store
+  class R1,R2,R3 store
   class CS write
   class QS read
   class C,H comp
+  class Q queue
   style RM fill:#ffffff,stroke:#2d6a4f,stroke-width:2px,stroke-dasharray: 6 4

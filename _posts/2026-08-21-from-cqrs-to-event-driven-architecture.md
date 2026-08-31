@@ -114,7 +114,7 @@ So the solution here is to build the answer in advance. An event handler subscri
 And that is CQRS, reached by necessity rather than by choice. Once your source of truth is an event stream, a separate read model isn't an option you evaluate, it's the only way to serve a query at all. This is why the two are almost always taught as one thing: the expensive pattern cannot work without the cheap one, so anybody explaining event sourcing has to explain CQRS on the way. What gets lost is that the reverse isn't true.
 
 <figure>
-  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/04-es-cqrs.png" alt="Event-sourced CQRS: the order command service appends to the event store, snapshots are taken every N events, an event handler projects the stream into read models, and the order query service reads those">
+  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/04-es-cqrs.png" alt="Event-sourced CQRS: the order command service publishes to an event queue, which feeds the append-only event store and a projection handler, and the handler projects the stream into read models the order query service reads">
   <figcaption>The same split as before, with considerably more machinery</figcaption>
 </figure>
 
