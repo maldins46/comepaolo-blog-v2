@@ -9,22 +9,20 @@ featured: true
 
 It all started with the same suggestion arriving from two different directions.
 
-Summer 2024, the first one; I was working with my previous company on a platform for portfolio monitoring. The Spring Boot backend exposed multiple endpoints queried by the frontend, with a REST API in place for that. API calls could be quite complex; behind that single HTTP connection the server validated, wrote to a database, called two external services, and only then answered. When one of those services had a bad afternoon, my user got a `500`. Not because their request was wrong, but because something three hops away was slow.
+Summer 2024, the first one; I was working with my previous company on a platform for portfolio monitoring. The Spring Boot backend exposed multiple endpoints queried by the frontend, with a REST API in place for that. Some of these API calls became quite complex, for different reasons. Behind one of these single HTTP connections the server validated, wrote to a database, called two external services, and only then answered. When one of those services had a bad afternoon, the user got a `500`. Not because their request was wrong, but because something three hops away was slow.
 
-A colleague I trust gave me advice on that, on more than one occasion: **separate the request from its execution, let events carry the work across, and go read about CQRS**. I thought that was an interesting take; I tried to explore that and other patterns here and there, but I never put proper time into it.
+A colleague I trust gave me advice on that, on more than one occasion: **separate the request from its execution, let events carry the work across, and go read about CQRS**. I tried to explore that and other patterns here and there, but I never put proper time into it.
 
-Spring 2026, the second one; in a brainstorming session, my manager suggested CQRS and event sourcing for an application we were designing, this time for a completely different reason: **audit logs out of the box, every change recorded, nothing overwritten, no separate history table to maintain**.
+Spring 2026, the second one; in a brainstorming session, my manager suggested CQRS and Event Sourcing for an application we were designing, this time for a completely different reason: **audit logs out of the box, no separate history table to maintain**.
 
-The same words, for two problems that had nothing to do with each other; that was enough to send me reading properly. I knew the shape of the fix I wanted for my endpoint, *take the request, write it down, say "got it", do the work later*, but I didn't know its name.
-
-So take my hand, and let's walk through that journey together.
+The same words, for two problems that had nothing to do with each other; that was enough to send me reading properly. So take my hand, and let's walk through that journey together.
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/get-deep.jpg" alt="Let's get deep on this together :)">
   <figcaption>Let's get deep on this together :)</figcaption>
 </figure>
 
-What I want to do here is connect a few tiles that were floating around separately in my head, and possibly in yours too: five patterns that keep coming up in the same conversations, what each one is really for, what it costs, and how they relate to one another. We start from a concrete need, that slow endpoint, and we end up somewhere far bigger than it.
+What I want to do here is connect a few tiles that were floating around separately in my head, and possibly in yours too: five patterns that keep coming up in the same conversations, what each one is really for, what it costs, and how they relate to one another. We start from a concrete need, that slow endpoint mentioned at first, and we end up somewhere far bigger than it.
 
 These are the five ideas we'll go through:
 
@@ -34,13 +32,13 @@ These are the five ideas we'll go through:
 4. **Transactional Outbox (+ Listen To Yourself).** One transaction for your state and your message.
 5. **Event-Driven Architecture.** Publish the fact, let the rest of the company consume it.
 
-To compare them fairly, every step gets pointed at the same example: an **order management system**, the boring back end of any online shop. A customer places an order, changes the delivery address ten minutes later, pays, and eventually the thing ships. A small domain, familiar to everybody, and with one property that becomes important later.
+To compare them fairly, every step gets pointed at the same example: an **order management system**, the back end of any online shop. A customer places an order, changes the delivery address ten minutes later, pays, and eventually the thing ships. A small domain, familiar to everybody, and with one property that becomes important later.
 
 For every step I'll ask the same two things: what it fixes on that example, and what it charges in exchange. Plus a third one that mattered more to me at the time, which is whether it gets us any closer to fixing that endpoint.
 
 ---
 
-## Step zero: The architecture we all know (and why it's fine)
+## Step zero: The baseline architecture we all know
 
 It's worth being precise about what we're comparing against, because it's tempting to turn it into an easy target, and it doesn't deserve that. The classic MVC layered application has four properties, and they travel together:
 
@@ -58,27 +56,27 @@ This usually works. I want to say it clearly, because everything after this sect
 
 But there are cracks, and each one is the reason for one of the five steps:
 
-1. **The data model is a compromise.** One schema serves writing *and* every shape of reading. That's why we often end up with a pile of database views: we're extracting read-optimised shapes from a write-optimised store, hiding a conflict of interest.
+1. **The data model is a compromise.** One schema serves both writing *and* reading. The form of that schema is usually write-optimized, meaning that we often end up using some tricks to obtain read-optimized views on top of it (ex., using database views). We hide a conflict of interest.
 2. **You can't scale reads and writes independently.** If your traffic is 90% reads, read replicas solve that today, cheaply, with no architectural change whatsoever, giving you *more of the same shape*. But if the shape itself is the problem, more copies of it don't help, and you have to rewrite the whole stack.
 3. **There's no history.** No snapshot, no replay, no rollback, no audit trail. Not because it's impossible, but because *you have to write that code yourself*, as a feature.
 4. **It pulls toward a monolith.** Nothing forbids splitting it, but the pull of "one model, one store, one deploy" is real.
 
-Cracks one and three (data model trade-off and no history) are the interesting ones, and they lead to different places. That's where the rest of this goes.
+So, what should we do when these cracks start to look more like reefs?
 
 ---
 
-## Step one: CQRS (and why it is much smaller than you think)
+## Step one: CQRS, and why it is much smaller than you think
 
-Let's start with the definition. CQRS is an architectural pattern, and stands for Command Query Responsibility Segregation. **Commands** are write operations, **queries** are read operations, and the claim is simply that the two don't have to share a model. The idea behind the pattern is simple: one code path handles writes, shaped around the business rules it has to enforce. Another handles reads, shaped around the questions the UI actually asks. They can share a database, even a schema. They just stop sharing a *model*.
+Let's start with the definition. CQRS is an architectural pattern, and stands for Command Query Responsibility Segregation. **Commands** are write operations, **queries** are read operations, and the claim is simply that the two don't have to share a model. The idea behind the pattern is simple: one code path handles writes, shaped around the business rules it has to enforce. Another handles reads, shaped around the questions the UI actually asks. They can share a database. They just stop sharing a *model*.
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/02-cqrs.png" alt="Plain CQRS: an order command service with a rich write model and an order query service with a flat read model, both against the same database">
   <figcaption>The split is in the code, not in the infrastructure</figcaption>
 </figure>
 
-This alone addresses the data modelling compromise crack mentioned before. Your write model can be a rich domain object with all its rules, your read model can be a flat denormalised thing that answers "every unshipped order from this week, most valuable first" in one query, and neither compromises for the other. No broker, no event store, no eventual consistency, no new operational work.
+This alone addresses the data modelling compromise crack mentioned before. Your write model can be a rich domain object with all its rules, your read model can be a flat denormalised thing that answers "every unshipped order from this week, most valuable first" in one query, and neither compromises for the other.
 
-The benefit is particularly felt in high-performance applications. CQRS lets you separate the load of reads and writes (crack #2), allowing you to scale each independently. An example of this is using different database access techniques for read and update.
+The benefit is particularly felt in high-performance applications. Since read and write "stacks" are now separated, they can now grow and *scale* independently. You can go from naive approaches, like having denormalized schema on reads to reduce the need of join oprations, to advenced approaches that involve even using **multiple** data stores. Which means, storing models in different databases, or with even different technologies (ex., using a Redis cache for read operations, with faster data access). 
 
 On the other side, keep in mind that like any pattern, CQRS is useful in some places, but not in others. Many systems do fit a CRUD mental model, and so should be done in that style. CQRS is a significant mental leap for all concerned, so shouldn't be tackled unless the benefit is worth the jump. It could (and should) only be used on specific portions of a system (a BoundedContext in DDD) and not the system as a whole.
 
@@ -86,9 +84,9 @@ On the other side, keep in mind that like any pattern, CQRS is useful in some pl
 
 ## Step two: event sourcing, and the state you never stored
 
-Event sourcing answers a different question altogether: *what do we store?*
+Event Sourcing answers a different question altogether: *what do we store?*
 
-Worth saying once before going into the details, since it confused me for weeks: **CQRS and event sourcing are two separate patterns**, and the dependency runs one way only. Event sourcing effectively forces CQRS on you (for reasons we'll get to). Most articles present them as one package.
+Worth saying once before going into the details, since it confused me for weeks: **CQRS and Event Sourcing are two separate patterns**, and the dependency runs one way only. Event sourcing effectively forces CQRS on you (for reasons we'll get to). Most articles present them as one package.
 
 So let's get back to that; **Event Sourcing** is an architectural design pattern, based on a simple concept: determine *application state from a sequence of events*. Not rows holding current values, but the ordered list of everything that ever happened. Instead of a row that says `status = SHIPPED`, you store `OrderPlaced`, then `OrderDeliveryAddressChanged`, then `OrderShipped`. Current state isn't stored at all: you get it by replaying the list.
 
@@ -98,7 +96,7 @@ The reason to want this is that **the history stops being something you have to 
 
 Two rules come with that definition. An **event is something that happened, never something that should happen**: that one is a **command**, and commands can be rejected, while events can't be. So you write them in the past tense, `OrderPlaced` and not `PlaceOrder`, using the vocabulary of the domain rather than of the database. And you **never delete them**: removing something is itself an event appended to the stream, because the deletion is a fact like any other (with some exceptions, like GDPR; but let's skirt around that, since we risk going off-topic).
 
-There aren't many moving parts: the **application** produces events, an **event queue** (i.e. a message broker) carries them, **event handlers** react to them, doing the actual business logic, and the **event store** keeps them durably. The ordered sequence flowing through all of it is the **event stream**.
+There aren't many moving parts: the **application** produces events, an **event queue** (usually represented by a message broker) carries them, **event handlers** react to them, doing the actual business logic, and the **event store** keeps them durably. The ordered sequence flowing through all of it is the **event stream**.
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/03-event-sourcing.png" alt="Event sourcing building blocks: the application, an event queue carrying the order events, event handlers, and the append-only event store">
@@ -109,9 +107,9 @@ There aren't many moving parts: the **application** produces events, an **event 
 
 Storing facts instead of state raises an obvious question. How do you query any of this?
 
-It's often said that event stores have terrible query performance, and that's not quite right. An event store is excellent at the one question it exists to answer: give me every event for aggregate 42, in order. That's an indexed range scan, and it's fast. What it cannot do is answer *any* question. "Every unshipped order from this week, most valuable first" spans thousands of streams, and no index makes replaying all of them viable.
+It's often said that event stores have terrible query performance, and that's not quite right. An event store is excellent at the one question it exists to answer: "give me every event for aggregate 42, in order". That's an indexed range scan, and it's fast. What it cannot do is answer *any* question. "Every unshipped order from this week, most valuable first" spans thousands of streams, and no index makes replaying all of them viable.
 
-So the solution here is to build the answer in advance. An event handler subscribes to the stream and **projects** it into a read model shaped like the question, and if you can build one projection (also referred to as a *snapshot*) you can build several: one for the dashboard, one for the search box, another one holding last week's state if somebody asks for it. The application queries those, never the raw log.
+So the solution here is to build the answer in advance. An event handler subscribes to the stream and **projects** it into a read model shaped like the question, and if you can build one projection (or *snapshot*) you can build several: one for the dashboard, one for the search box, another one holding last week's state if somebody asks for it. The application queries those, never the raw log.
 
 And that is CQRS, reached by necessity rather than by choice. Once your source of truth is an event stream, a separate read model isn't an option you evaluate, it's the only way to serve a query at all. This is why the two are almost always taught as one thing: the expensive pattern cannot work without the cheap one, so anybody explaining event sourcing has to explain CQRS on the way. What gets lost is that the reverse isn't true.
 
@@ -120,13 +118,13 @@ And that is CQRS, reached by necessity rather than by choice. Once your source o
   <figcaption>The same split as before, with considerably more machinery</figcaption>
 </figure>
 
-What you buy with all that machinery is the missing history crack, closed completely. You can rebuild any state at any time, which means "what did this look like on the 3rd of March?" stops being a research project. My favourite consequence is the debugging one: a user hits a bug that only shows up after a specific sequence of operations, and instead of guessing, you replay their exact stream into a test environment and watch it happen in front of you.
+What you buy with all that machinery is the missing history crack, closed completely. You can rebuild any state at any time, which means "what did this look like on the 3rd of March?" stops being a research project. Another interesting consequence regards also *debugging*: if a user hits a bug that only shows up after a specific sequence of operations, you replay their exact stream into a test environment and watch it happen, instead of guessing.
 
 ### The reality check
 
 At this point I had a decent map and no idea whether anyone actually lived there. So I went looking for people who had actually built these systems, rather than people explaining them, and the picture is clearly divided.
 
-It pays off in some places. The creator of Axon Framework, in [a thread about real-world adoption](https://www.reddit.com/r/java/comments/6znmfi/anyone_using_axon_or_cqrs_event_sourcing_in_real), lists banks running core payment systems on it, airport management systems processing radar data, and the betting industry, *"because of the strict auditing requirements and high value of past events."* Someone rebuilding tracking for a large logistics firm put it more sharply: the traditional model, *"CRUD, locks, relational DB, is the one that ADDS a lot of complexity here, not the event sourcing stack we chose."* That's the strongest case for the pattern. Not that it's powerful, but that in the right domain it's *simpler than the alternative*.
+It pays off in some places. The creator of Axon Framework (a, probably "the", state-of-the-art framework that allows to apply CQRS + Event Sourcing in Java), in [a thread about real-world adoption](https://www.reddit.com/r/java/comments/6znmfi/anyone_using_axon_or_cqrs_event_sourcing_in_real), lists banks running core payment systems on it, airport management systems processing radar data, and the betting industry, *"because of the strict auditing requirements and high value of past events."* Someone rebuilding tracking for a large logistics firm put it more sharply: the traditional model, *"CRUD, locks, relational DB, is the one that ADDS a lot of complexity here, not the event sourcing stack we chose."* That's the strongest case for the pattern. Not that it's powerful, but that in the right domain it's *simpler than the alternative*.
 
 And it could be a disaster in others. A team processing 40,000 IoT messages a second, exactly the "high throughput" territory you'd expect to be a good fit, tried it and scrapped it: it *"adds massive amounts of complexity, and what would be a simple problem to solve in standard architecture becomes a whole sprint for your team."* Their conclusion was to stick with a traditional architecture until it can't cut it, then refactor, rather than choosing it from the start.
 
