@@ -144,27 +144,6 @@ A client sends a request whose processing is slow, or depends on downstream syst
 
 Underneath, the incoming request becomes an explicit **command** object, something like `ProcessPaymentCommand`, and goes on a queue. Background workers pull commands off and execute them.
 
-Roughly:
-
-```
-on POST /orders (request):
-    validate request shape          # cheap, structural only
-    command = PlaceOrderCommand(payload=request, status=PENDING)
-    persist(command)                # the only durable write here
-    return 202 Accepted, { id: command.id }
-
-worker loop:
-    command = claim_next(status=PENDING)   # atomically, so two workers can't take it
-    if none: sleep; continue
-
-    try:
-        execute_business_logic(command)     # the slow, fragile part
-        mark(command, DONE)
-    catch transient_failure:
-        mark(command, PENDING, attempts += 1, next_attempt_at = now + backoff)
-    catch permanent_failure as e:
-        mark(command, FAILED, reason = e)
-```
 
 <figure>
   <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/07-async-request-reply.png" alt="Asynchronous Request-Reply: the client posts an order, the API persists a PENDING job and answers 202 with a jobId, a worker claims and creates the order, and the client polls a status endpoint that eventually answers 302 with the order url">
