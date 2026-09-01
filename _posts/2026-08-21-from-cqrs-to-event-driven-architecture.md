@@ -166,6 +166,11 @@ worker loop:
         mark(command, FAILED, reason = e)
 ```
 
+<figure>
+  <img src="{{ site.baseurl }}/assets/article_images/2026-08-21-from-cqrs-to-event-driven-architecture/07-async-request-reply.png" alt="Asynchronous Request-Reply: the client posts an order, the API persists a PENDING job and answers 202 with a jobId, a worker claims and creates the order, and the client polls a status endpoint that eventually answers 302 with the order url">
+  <figcaption>Accept now, execute later, let the client come back for the result</figcaption>
+</figure>
+
 Now look at what it buys.
 
 **Retries come for free**, because the failure branch isn't error handling bolted on afterwards, it's the same state machine as the success branch. When the external API is down, the command sits in `PENDING` and gets tried again later. Your user doesn't get a `500` for something that was never their fault.

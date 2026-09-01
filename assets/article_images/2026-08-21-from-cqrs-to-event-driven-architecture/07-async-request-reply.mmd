@@ -1,0 +1,24 @@
+flowchart TB
+  C["<b>Client</b>"]
+  API["<b>API</b><br/><i>POST /orders</i>"]
+  CMD[("<b>Jobs</b><br/><i>PENDING, then DONE or FAILED</i>")]
+  W["<b>Worker</b><br/><i>claim & create order</i>"]
+  STATUS["<b>Status endpoint</b><br/><i>GET /jobs/{jobId}</i>"]
+
+  C -->|1. POST /orders| API
+  API -->|persist, PENDING| CMD
+  API -.->|2. 202 Accepted, jobId| C
+  CMD -->|3. claim_next| W
+  W -.->|4. mark DONE, retry, or FAILED| CMD
+  C -->|5. poll| STATUS
+  STATUS -->|reads| CMD
+  STATUS -.->|6. 302 Found, Order url| C
+
+  classDef store fill:#e8eef7,stroke:#3d5a80,stroke-width:2px
+  classDef comp fill:#eef0fb,stroke:#5b5ea6,stroke-width:2px
+  classDef write fill:#fde8e8,stroke:#a33,stroke-width:2px
+  classDef read fill:#e8f7ec,stroke:#2d6a4f,stroke-width:2px
+  class CMD store
+  class C,W comp
+  class API write
+  class STATUS read
