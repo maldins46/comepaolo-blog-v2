@@ -1,5 +1,5 @@
 ---
-title: "From CQRS to Event-Driven Architecture: the five steps, and where to stop"
+title: "From CQRS to Event-Driven Architecture: an architectural pattern walkthrough"
 date: 2026-08-21
 excerpt: "A REST endpoint that timed out because something three hops away was slow. That is how I ended up reading about CQRS, Event Sourcing, Asynchronous Request-Reply and Event-Driven Architecture."
 tags: [architecture, cqrs, event-sourcing, eda, backend]
